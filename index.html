@@ -3,563 +3,173 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Sierra Brands Group &mdash; Tech Pack Studio</title>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Mono:wght@300;400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<title>Tech Pack Studio — Sierra Brands Group</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=DM+Mono:wght@300;400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
-*{margin:0;padding:0;box-sizing:border-box}
-:root{--black:#0a0a0a;--white:#fafaf8;--cream:#f2f0ea;--g1:#e8e6e0;--g3:#c4c2bc;--g5:#8a8880;--g7:#4a4845;--accent:#c8a96e;--danger:#c0392b;--ok:#2e7d32;--fd:'Playfair Display',serif;--fm:'DM Mono',monospace;--fs:'DM Sans',sans-serif}
-html{font-size:14px;background:var(--cream);color:var(--black)}
-body{font-family:var(--fs);min-height:100vh;display:flex;flex-direction:column}
-nav{background:var(--black);color:var(--white);display:flex;align-items:center;justify-content:space-between;padding:0 2rem;height:56px;position:sticky;top:0;z-index:100}
-.nb{display:flex;align-items:baseline;gap:.75rem}
-.nb-name{font-family:var(--fd);font-size:1.1rem;letter-spacing:.02em}
-.nb-sub{font-family:var(--fm);font-size:.6rem;color:var(--g5);letter-spacing:.12em;text-transform:uppercase}
-.ntabs{display:flex}
-.ntab{font-family:var(--fm);font-size:.62rem;letter-spacing:.1em;text-transform:uppercase;padding:.5rem 1.1rem;color:var(--g5);cursor:pointer;border-bottom:2px solid transparent;transition:all .2s;background:none;border-top:none;border-left:none;border-right:none}
-.ntab:hover{color:var(--white)}
-.ntab.on{color:var(--accent);border-bottom-color:var(--accent)}
-.nact{display:flex;gap:.5rem;align-items:center}
-.page{display:none;flex:1;padding:2rem}
-.page.on{display:block}
-.ph{display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:2rem;padding-bottom:1.5rem;border-bottom:1px solid var(--g1)}
-.pt{font-family:var(--fd);font-size:2rem;font-weight:400;line-height:1}
-.pt em{font-style:italic;color:var(--g5)}
-.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--g1);margin-bottom:2rem;border:1px solid var(--g1)}
-.sc{background:var(--white);padding:1.25rem 1.5rem}
-.sn{font-family:var(--fd);font-size:2.5rem;font-weight:400;line-height:1}
-.sl{font-family:var(--fm);font-size:.58rem;letter-spacing:.1em;text-transform:uppercase;color:var(--g5);margin-top:.3rem}
-.tb{display:flex;gap:.75rem;align-items:center;margin-bottom:1.5rem;flex-wrap:wrap}
-.sf{flex:1;min-width:180px;border:1px solid var(--g1);background:var(--white);display:flex;align-items:center;gap:.5rem;padding:.5rem .75rem}
-.sf input{border:none;background:none;font-family:var(--fs);font-size:.85rem;color:var(--black);flex:1;outline:none}
-.sf input::placeholder{color:var(--g3)}
-.fps{display:flex;gap:.35rem;flex-wrap:wrap}
-.pill{font-family:var(--fm);font-size:.58rem;letter-spacing:.08em;text-transform:uppercase;padding:.3rem .85rem;border:1px solid var(--g3);background:none;cursor:pointer;color:var(--g5);transition:all .15s}
-.pill:hover{border-color:var(--black);color:var(--black)}
-.pill.on{background:var(--black);color:var(--white);border-color:var(--black)}
-.pill.cf.on{background:#1a4a3a;border-color:#1a4a3a}
-.pill.ct.on{background:#3a2a5a;border-color:#3a2a5a}
-.pill.cl.on{background:#4a3010;border-color:#4a3010}
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(255px,1fr));gap:1px;background:var(--g1)}
-.card{background:var(--white);padding:1.5rem;cursor:pointer;transition:background .15s;position:relative;overflow:hidden}
-.card:hover{background:var(--cream)}
-.card::after{content:'';position:absolute;left:0;top:0;width:3px;height:0;background:var(--accent);transition:height .2s}
-.card:hover::after{height:100%}
-.cc{font-family:var(--fm);font-size:.52rem;letter-spacing:.12em;text-transform:uppercase;padding:.22rem .55rem;display:inline-block;margin-bottom:.7rem}
-.fab .cc{background:#e8f4ee;color:#1a4a3a}
-.tri .cc{background:#eeeaf8;color:#3a2a5a}
-.lab .cc{background:#faf0e0;color:#4a3010}
-.cn{font-family:var(--fd);font-size:1rem;font-weight:400;margin-bottom:.2rem;line-height:1.3}
-.cco{font-family:var(--fm);font-size:.62rem;color:var(--g5);margin-bottom:.7rem}
-.cd{font-size:.76rem;color:var(--g7);line-height:1.6}
-.cf2{display:flex;justify-content:space-between;align-items:center;margin-top:.85rem;padding-top:.7rem;border-top:1px solid var(--g1)}
-.bt{font-family:var(--fm);font-size:.52rem;letter-spacing:.06em;text-transform:uppercase;padding:.18rem .45rem;background:var(--cream);color:var(--g7)}
-.cu{font-family:var(--fm);font-size:.58rem;color:var(--g5)}
-.sd{width:6px;height:6px;border-radius:50%;display:inline-block;margin-right:.3rem}
-.sa .sd{background:var(--ok)}.sp .sd{background:var(--accent)}.sr .sd{background:var(--danger)}
-.btn{font-family:var(--fm);font-size:.62rem;letter-spacing:.08em;text-transform:uppercase;padding:.5rem 1.2rem;border:1px solid var(--black);background:var(--black);color:var(--white);cursor:pointer;transition:all .15s}
-.btn:hover{background:var(--g7)}
-.btn.out{background:none;color:var(--black)}
-.btn.out:hover{background:var(--black);color:var(--white)}
-.btn.acc{background:var(--accent);border-color:var(--accent);color:var(--black)}
-.btn.acc:hover{background:#b8993e}
-.btn.sm{padding:.32rem .8rem;font-size:.58rem}
-.btn.dd{background:var(--danger);border-color:var(--danger);color:var(--white)}
-.ov{display:none;position:fixed;inset:0;background:rgba(10,10,10,.72);z-index:200;align-items:center;justify-content:center;backdrop-filter:blur(2px)}
-.ov.on{display:flex}
-.modal{background:var(--white);width:min(580px,94vw);max-height:88vh;overflow-y:auto;border-top:3px solid var(--accent)}
-.mh{display:flex;justify-content:space-between;align-items:flex-start;padding:1.6rem 2rem 1.1rem;border-bottom:1px solid var(--g1);position:sticky;top:0;background:var(--white);z-index:1}
-.mt{font-family:var(--fd);font-size:1.45rem;font-weight:400}
-.mc{background:none;border:none;font-size:1.1rem;cursor:pointer;color:var(--g5);padding:.2rem}
-.mc:hover{color:var(--black)}
-.mb{padding:1.6rem 2rem}
-.mf{padding:1.1rem 2rem;border-top:1px solid var(--g1);display:flex;justify-content:flex-end;gap:.65rem;position:sticky;bottom:0;background:var(--white)}
-.fg{display:grid;grid-template-columns:1fr 1fr;gap:.9rem}
-.fi{display:flex;flex-direction:column;gap:.35rem}
-.fi.s2{grid-column:span 2}
-label{font-family:var(--fm);font-size:.58rem;letter-spacing:.1em;text-transform:uppercase;color:var(--g5)}
-input,select,textarea{font-family:var(--fs);font-size:.83rem;color:var(--black);border:1px solid var(--g1);background:var(--cream);padding:.55rem .72rem;outline:none;transition:border-color .15s}
-input:focus,select:focus,textarea:focus{border-color:var(--black);background:var(--white)}
-textarea{resize:vertical;min-height:76px}
-select{appearance:none;cursor:pointer}
-.dg{display:grid;grid-template-columns:120px 1fr;gap:.55rem 1.4rem;font-size:.8rem;align-items:start}
-.dk{font-family:var(--fm);font-size:.58rem;letter-spacing:.08em;text-transform:uppercase;color:var(--g5)}
-.dv{color:var(--black)}
-.dvd{grid-column:span 2;height:1px;background:var(--g1);margin:.4rem 0}
-.sc2{display:flex;gap:.35rem;flex-wrap:wrap;margin-top:.45rem}
-.sch{font-family:var(--fm);font-size:.58rem;padding:.28rem .65rem;background:var(--cream);border:1px solid var(--g1);color:var(--g7)}
-/* BOM */
-.bl{display:grid;grid-template-columns:1fr 320px;gap:1.4rem;align-items:start}
-.bp{background:var(--white);border:1px solid var(--g1)}
-.bph{padding:1.1rem 1.4rem;border-bottom:1px solid var(--g1);display:flex;justify-content:space-between;align-items:center}
-.bpt{font-family:var(--fm);font-size:.62rem;letter-spacing:.1em;text-transform:uppercase;color:var(--g5)}
-.bsi{padding:1.1rem 1.4rem;border-bottom:1px solid var(--g1)}
-.bsg{display:grid;grid-template-columns:1fr 1fr;gap:.7rem}
-.bir{display:grid;grid-template-columns:auto 1fr auto;gap:.7rem;align-items:center;padding:.8rem 1.4rem;border-bottom:1px solid var(--g1);font-size:.78rem}
-.bic{width:52px;font-family:var(--fm);font-size:.5rem;letter-spacing:.06em;text-transform:uppercase;padding:.18rem .35rem;text-align:center}
-.bin{color:var(--black)}
-.bio{font-family:var(--fm);font-size:.58rem;color:var(--g5)}
-.brm{background:none;border:none;cursor:pointer;color:var(--g3);font-size:1rem;padding:.15rem;transition:color .15s;line-height:1}
-.brm:hover{color:var(--danger)}
-.bem{padding:2.5rem;text-align:center;color:var(--g3);font-family:var(--fm);font-size:.62rem;letter-spacing:.08em;text-transform:uppercase}
-.lm{max-height:500px;overflow-y:auto}
-.li{display:flex;justify-content:space-between;align-items:center;padding:.7rem 1.4rem;border-bottom:1px solid var(--g1);cursor:pointer;transition:background .12s}
-.li:hover{background:var(--cream)}
-.li:last-child{border-bottom:none}
-.lin{font-size:.78rem;color:var(--black)}
-.lic{font-family:var(--fm);font-size:.58rem;color:var(--g5)}
-.lai{color:var(--g3);font-size:1rem;transition:color .15s}
-.li:hover .lai{color:var(--accent)}
-.lsw{padding:.7rem 1rem;border-bottom:1px solid var(--g1)}
-.lsw input{width:100%;padding:.42rem .62rem;font-size:.78rem;border:1px solid var(--g1);background:var(--cream)}
-/* TECH PACK */
-.tpl{display:grid;grid-template-columns:248px 1fr;gap:1.4rem;align-items:start}
-.tps{background:var(--white);border:1px solid var(--g1)}
-.tpsh{padding:.9rem 1.1rem;border-bottom:1px solid var(--g1)}
-.tpst{font-family:var(--fm);font-size:.58rem;letter-spacing:.1em;text-transform:uppercase;color:var(--g5)}
-.tpsb{padding:1.1rem}
-.tpf{margin-bottom:.62rem}
-.tpf label{font-family:var(--fm);font-size:.56rem;letter-spacing:.1em;text-transform:uppercase;color:var(--g5);display:block;margin-bottom:.28rem}
-.tpf input{width:100%;font-size:.78rem;padding:.42rem .62rem;border:1px solid var(--g1);background:var(--cream)}
-.tpf input:focus{border-color:var(--black);background:var(--white);outline:none}
-.tpv{background:var(--white);border:1px solid var(--g1);padding:2rem;min-height:600px}
-.tph{background:var(--black);color:var(--white);padding:1.1rem 1.4rem;display:grid;grid-template-columns:auto 1fr 1fr;gap:1.4rem;align-items:start;margin-bottom:1.4rem}
-.tpbn{font-family:var(--fd);font-size:1.05rem;letter-spacing:.04em}
-.tpbg{font-family:var(--fm);font-size:.52rem;color:var(--g5);letter-spacing:.1em;text-transform:uppercase;margin-top:.18rem}
-.tpmc{display:grid;gap:.28rem}
-.tpmr{display:grid;grid-template-columns:100px 1fr;font-family:var(--fm);font-size:.6rem}
-.tpmk{color:var(--g5);text-transform:uppercase;letter-spacing:.06em}
-.tpmv{color:var(--white)}
-.tpsl{font-family:var(--fd);font-size:1.2rem;font-style:italic;margin-bottom:.9rem;color:var(--black)}
-.tbt{width:100%;border-collapse:collapse;font-size:.73rem}
-.tbt th{font-family:var(--fm);font-size:.52rem;letter-spacing:.1em;text-transform:uppercase;color:var(--g5);padding:.45rem .7rem;border-bottom:2px solid var(--black);text-align:left}
-.tbt td{padding:.55rem .7rem;border-bottom:1px solid var(--g1);color:var(--black);vertical-align:top}
-.tbt tr:last-child td{border-bottom:none}
-.tbsr td{background:var(--cream);font-family:var(--fm);font-size:.55rem;letter-spacing:.08em;text-transform:uppercase;color:var(--g7);padding:.35rem .7rem;font-weight:500}
-/* VENDOR */
-.vl{max-width:660px;margin:0 auto}
-.vi{background:var(--black);color:var(--white);padding:2rem;margin-bottom:1.4rem}
-.vit{font-family:var(--fd);font-size:1.7rem;font-weight:400;margin-bottom:.45rem}
-.vis{font-family:var(--fm);font-size:.62rem;color:var(--g5);letter-spacing:.08em;text-transform:uppercase}
-.vfc{background:var(--white);border:1px solid var(--g1);padding:2rem}
-.fst{font-family:var(--fm);font-size:.58rem;letter-spacing:.12em;text-transform:uppercase;color:var(--g5);margin-bottom:.9rem;padding-bottom:.45rem;border-bottom:1px solid var(--g1)}
-.sb{background:#e8f4ee;border-left:3px solid var(--ok);padding:.9rem 1.1rem;margin-bottom:.9rem;font-size:.82rem;color:#1a4a3a;display:none}
-/* TOAST */
-.toast{position:fixed;bottom:2rem;right:2rem;background:var(--black);color:var(--white);padding:.7rem 1.2rem;font-family:var(--fm);font-size:.62rem;letter-spacing:.08em;z-index:999;transform:translateY(2rem);opacity:0;transition:all .25s;pointer-events:none;border-left:3px solid var(--accent)}
-.toast.on{transform:translateY(0);opacity:1}
-.es{padding:4rem 2rem;text-align:center;grid-column:1/-1}
-.est{font-family:var(--fd);font-size:1.4rem;font-style:italic;color:var(--g5);margin-bottom:.4rem}
-.ess{font-family:var(--fm);font-size:.62rem;letter-spacing:.08em;text-transform:uppercase;color:var(--g3)}
-::-webkit-scrollbar{width:4px;height:4px}
-::-webkit-scrollbar-thumb{background:var(--g3)}
-@keyframes fi{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
-.card{animation:fi .18s ease both}
-@media print{nav,.tps,.ph,.nact{display:none!important}.page{padding:0}.tpl{grid-template-columns:1fr}.tpv{border:none;padding:0}}
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --ink:#16130F;
+  --ink-muted:#8A8278;
+  --ink-faint:#C4BDB4;
+  --cream:#F6F1E9;
+  --cream-dark:#EDE6D6;
+  --accent:#C4622D;
+  --border:rgba(22,19,15,0.11);
+  --sans:'DM Sans',sans-serif;
+  --serif:'Cormorant Garamond',serif;
+  --mono:'DM Mono',monospace;
+}
+html,body{min-height:100vh;display:flex;flex-direction:column;}
+body{font-family:var(--sans);background:var(--ink);color:var(--cream);font-size:14px;line-height:1.6;}
+
+header{
+  padding:48px 64px 0;
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-end;
+}
+.brand-name{font-family:var(--serif);font-size:15px;font-weight:300;letter-spacing:0.16em;color:var(--cream);}
+.brand-sub{font-family:var(--mono);font-size:8px;letter-spacing:0.22em;text-transform:uppercase;color:rgba(246,241,233,0.28);margin-top:4px;}
+.header-tag{font-family:var(--mono);font-size:9px;letter-spacing:0.14em;text-transform:uppercase;color:rgba(246,241,233,0.22);}
+
+.hero{padding:80px 64px 56px;max-width:860px;}
+.hero-eye{font-family:var(--mono);font-size:9px;letter-spacing:0.22em;text-transform:uppercase;color:var(--accent);margin-bottom:20px;}
+.hero-title{font-family:var(--serif);font-size:clamp(50px,7vw,84px);font-weight:300;line-height:0.95;color:var(--cream);margin-bottom:26px;}
+.hero-title em{font-style:italic;color:rgba(246,241,233,0.4);}
+.hero-desc{font-size:15px;color:rgba(246,241,233,0.48);max-width:460px;line-height:1.75;font-weight:300;}
+
+.rule{margin:0 64px;height:1px;background:rgba(246,241,233,0.07);}
+
+.tools{padding:60px 64px;display:grid;grid-template-columns:1fr 1fr;gap:20px;max-width:1080px;}
+
+.card{
+  background:rgba(246,241,233,0.03);
+  border:1px solid rgba(246,241,233,0.09);
+  border-radius:3px;
+  padding:38px;
+  display:flex;
+  flex-direction:column;
+  gap:18px;
+  text-decoration:none;
+  color:inherit;
+  position:relative;
+  overflow:hidden;
+  transition:background 0.2s,border-color 0.2s;
+}
+.card::after{
+  content:'';
+  position:absolute;
+  top:0;left:0;right:0;height:2px;
+  background:var(--accent);
+  transform:scaleX(0);
+  transform-origin:left;
+  transition:transform 0.28s ease;
+}
+.card:hover{background:rgba(246,241,233,0.06);border-color:rgba(246,241,233,0.16);}
+.card:hover::after{transform:scaleX(1);}
+
+.card-num{font-family:var(--mono);font-size:9px;letter-spacing:0.18em;text-transform:uppercase;color:rgba(246,241,233,0.22);}
+.card-title{font-family:var(--serif);font-size:30px;font-weight:300;color:var(--cream);line-height:1.1;}
+.card-title em{font-style:italic;color:rgba(246,241,233,0.42);}
+.card-desc{font-size:13px;color:rgba(246,241,233,0.42);line-height:1.75;font-weight:300;flex:1;}
+
+.card-list{display:flex;flex-direction:column;gap:7px;}
+.card-item{
+  display:flex;align-items:center;gap:10px;
+  font-family:var(--mono);font-size:9px;letter-spacing:0.1em;text-transform:uppercase;
+  color:rgba(246,241,233,0.28);
+}
+.card-item::before{content:'';width:14px;height:1px;background:var(--accent);flex-shrink:0;opacity:0.7;}
+
+.card-cta{
+  display:flex;align-items:center;gap:10px;
+  font-family:var(--mono);font-size:10px;letter-spacing:0.14em;text-transform:uppercase;
+  color:var(--cream);
+  padding-top:18px;
+  border-top:1px solid rgba(246,241,233,0.07);
+  transition:gap 0.2s;
+}
+.card:hover .card-cta{gap:16px;}
+.arrow{display:inline-block;transition:transform 0.2s;}
+.card:hover .arrow{transform:translateX(5px);}
+
+footer{
+  margin-top:auto;
+  padding:36px 64px;
+  border-top:1px solid rgba(246,241,233,0.06);
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+.foot-l,.foot-r{font-family:var(--mono);font-size:9px;letter-spacing:0.12em;text-transform:uppercase;color:rgba(246,241,233,0.18);}
+
+@media(max-width:700px){
+  header,.hero,.rule,.tools,footer{padding-left:24px;padding-right:24px;}
+  .tools{grid-template-columns:1fr;}
+  .hero{padding-top:44px;padding-bottom:40px;}
+}
 </style>
 </head>
 <body>
-<nav>
-  <div class="nb"><span class="nb-name">Sierra Brands Group</span><span class="nb-sub">Tech Pack Studio</span></div>
-  <div class="ntabs">
-    <button class="ntab on" data-p="lib" onclick="go('lib',this)">Library</button>
-    <button class="ntab" data-p="bom" onclick="go('bom',this)">BOM Builder</button>
-    <button class="ntab" data-p="tp" onclick="go('tp',this)">Tech Pack</button>
-    <button class="ntab" data-p="vnd" onclick="go('vnd',this)">Vendor Form</button>
-  </div>
-  <div class="nact">
-    <button class="btn sm out" style="color:#555;border-color:#333" onclick="exportDB()">Export JSON</button>
-    <button class="btn sm acc" onclick="addModal()">+ Add Item</button>
-  </div>
-</nav>
 
-<div class="page on" id="page-lib">
-  <div class="ph">
-    <div class="pt">Trim &amp; Fabric <em>Library</em></div>
-    <div id="lmeta" style="font-family:var(--fm);font-size:.62rem;color:var(--g5);letter-spacing:.08em;text-transform:uppercase;text-align:right"></div>
+<header>
+  <div>
+    <div class="brand-name">Sierra Brands Group</div>
+    <div class="brand-sub">Internal Tools</div>
   </div>
-  <div class="stats" id="stats"></div>
-  <div class="tb">
-    <div class="sf"><span style="color:var(--g3)">&#x2315;</span><input type="text" id="lq" placeholder="Search name, code, supplier&hellip;" oninput="renderLib()"></div>
-    <div class="fps" id="brf"></div>
-    <div class="fps" id="ctf"></div>
-    <div class="fps" id="stf"></div>
-  </div>
-  <div class="grid" id="grid"></div>
+  <div class="header-tag">Tech Pack Studio</div>
+</header>
+
+<div class="hero">
+  <div class="hero-eye">Tech Pack Studio</div>
+  <h1 class="hero-title">Build <em>faster.</em><br>Ship <em>smarter.</em></h1>
+  <p class="hero-desc">Everything your team needs to create, manage, and generate tech packs — from trim library to finished document.</p>
 </div>
 
-<div class="page" id="page-bom">
-  <div class="ph">
-    <div class="pt">BOM <em>Builder</em></div>
-    <div class="nact">
-      <button class="btn sm out" onclick="clearBOM()">Clear</button>
-      <button class="btn sm acc" onclick="toTP()">Send to Tech Pack &rarr;</button>
+<div class="rule"></div>
+
+<div class="tools">
+
+  <a class="card" href="techpack-intake.html">
+    <div class="card-num">Tool 01</div>
+    <div class="card-title">New Style <em>Intake</em></div>
+    <p class="card-desc">Answer a few questions and generate a complete tech pack shell in seconds. Specs auto-populate from your fit bloc library. BOM pulls from saved trims.</p>
+    <div class="card-list">
+      <div class="card-item">Style number auto-generated</div>
+      <div class="card-item">Specs pulled from fit bloc</div>
+      <div class="card-item">BOM auto-populated</div>
+      <div class="card-item">Wash reference from site</div>
+      <div class="card-item">Export-ready PDF</div>
     </div>
-  </div>
-  <div class="bl">
-    <div>
-      <div class="bp">
-        <div class="bph"><span class="bpt">Style Info</span></div>
-        <div class="bsi">
-          <div class="bsg">
-            <div class="fi"><label>Brand</label><input type="text" id="bb" placeholder="Oliver Logan"></div>
-            <div class="fi"><label>Division</label><input type="text" id="bd" placeholder="Women's Jeans"></div>
-            <div class="fi"><label>Style #</label><input type="text" id="bs" placeholder="WSF-256-345"></div>
-            <div class="fi"><label>Style Name</label><input type="text" id="bn" placeholder="Cigarette"></div>
-            <div class="fi"><label>Season</label><input type="text" id="bse" placeholder="Holiday '26"></div>
-            <div class="fi"><label>Fabric Code</label><input type="text" id="bf" placeholder="CS1922E-87F"></div>
-            <div class="fi"><label>Color / Wash</label><input type="text" id="bc" placeholder="Bright Indigo Worn"></div>
-            <div class="fi"><label>Vendor</label><input type="text" id="bv" placeholder="Winner"></div>
-          </div>
-        </div>
-        <div class="bph" style="border-top:1px solid var(--g1)">
-          <span class="bpt">Selected Items</span>
-          <span id="bcnt" style="font-family:var(--fm);font-size:.6rem;color:var(--accent)">0 items</span>
-        </div>
-        <div id="bil"><div class="bem">No items yet. Search library &rarr;</div></div>
-      </div>
+    <div class="card-cta">
+      Start a new style
+      <span class="arrow">→</span>
     </div>
-    <div>
-      <div class="bp">
-        <div class="bph"><span class="bpt">Pull from Library</span></div>
-        <div class="lsw"><input type="text" id="blq" placeholder="Search&hellip;" oninput="renderBL()"></div>
-        <div class="lm" id="bll"></div>
-      </div>
+  </a>
+
+  <a class="card" href="techpack-app.html">
+    <div class="card-num">Tool 02</div>
+    <div class="card-title">Trim &amp; Fabric <em>Library</em></div>
+    <p class="card-desc">Your living database of every trim, fabric, and label across all Sierra Brands Group styles. Search, filter by brand, and track which styles each item has been used on.</p>
+    <div class="card-list">
+      <div class="card-item">Search by name, code, supplier</div>
+      <div class="card-item">Filter by brand &amp; category</div>
+      <div class="card-item">Track styles per trim</div>
+      <div class="card-item">BOM builder</div>
+      <div class="card-item">Vendor submission inbox</div>
     </div>
-  </div>
+    <div class="card-cta">
+      Open library
+      <span class="arrow">→</span>
+    </div>
+  </a>
+
 </div>
 
-<div class="page" id="page-tp">
-  <div class="ph">
-    <div class="pt">Tech Pack <em>Generator</em></div>
-    <div><button class="btn sm out" onclick="window.print()">Print / Save PDF</button></div>
-  </div>
-  <div class="tpl">
-    <div class="tps">
-      <div class="tpsh"><div class="tpst">Header Fields</div></div>
-      <div class="tpsb">
-        <div class="tpf"><label>Brand</label><input type="text" id="tb" oninput="renderTP()" placeholder="Oliver Logan"></div>
-        <div class="tpf"><label>Division</label><input type="text" id="td" oninput="renderTP()" placeholder="Women's Jeans"></div>
-        <div class="tpf"><label>Style #</label><input type="text" id="ts" oninput="renderTP()" placeholder="WSF-256-345"></div>
-        <div class="tpf"><label>Style Name</label><input type="text" id="tn" oninput="renderTP()" placeholder="Cigarette"></div>
-        <div class="tpf"><label>Season</label><input type="text" id="tse" oninput="renderTP()" placeholder="Holiday '26"></div>
-        <div class="tpf"><label>Fabric Code</label><input type="text" id="tf" oninput="renderTP()" placeholder="CS1922E-87F"></div>
-        <div class="tpf"><label>Color / Wash</label><input type="text" id="tc" oninput="renderTP()" placeholder="Bright Indigo Worn"></div>
-        <div class="tpf"><label>Sample #</label><input type="text" id="tsa" oninput="renderTP()" placeholder="Proto"></div>
-        <div class="tpf"><label>Sample Size</label><input type="text" id="tsz" oninput="renderTP()" placeholder="27"></div>
-        <div class="tpf"><label>Designed By</label><input type="text" id="tde" oninput="renderTP()" placeholder="Lauren"></div>
-        <div class="tpf"><label>Checked By</label><input type="text" id="tch" oninput="renderTP()" placeholder="Anthony"></div>
-        <div class="tpf"><label>Vendor</label><input type="text" id="tv" oninput="renderTP()" placeholder="Winner"></div>
-      </div>
-    </div>
-    <div class="tpv" id="tpv">
-      <div style="text-align:center;padding:5rem 2rem;color:var(--g3)">
-        <div style="font-family:var(--fd);font-size:1.4rem;font-style:italic;color:var(--g5);margin-bottom:.45rem">Fill in header to preview</div>
-        <div style="font-family:var(--fm);font-size:.62rem;letter-spacing:.08em;text-transform:uppercase">or send a BOM from the Builder tab</div>
-      </div>
-    </div>
-  </div>
-</div>
+<footer>
+  <div class="foot-l">Sierra Brands Group © 2026</div>
+  <div class="foot-r">Internal use only</div>
+</footer>
 
-<div class="page" id="page-vnd">
-  <div class="vl">
-    <div class="vi"><div class="vit">Submit a Trim or Fabric</div><div class="vis">Sierra Brands Group &mdash; Vendor Portal</div></div>
-    <div class="vfc">
-      <div class="sb" id="vsb">Item submitted and added to the library pending review. Thank you.</div>
-      <div class="fst">Item Details</div>
-      <div class="fg" style="margin-bottom:1.2rem">
-        <div class="fi"><label>Item Name *</label><input type="text" id="vn" placeholder="e.g. YKK #5 Zipper"></div>
-        <div class="fi"><label>Your Code / Ref</label><input type="text" id="vco"></div>
-        <div class="fi"><label>Category *</label><select id="vcat"><option value="">Select&hellip;</option><option>Fabric</option><option>Trim</option><option>Label</option></select></div>
-        <div class="fi"><label>Company Name *</label><input type="text" id="vsu"></div>
-        <div class="fi"><label>Country of Origin</label><input type="text" id="vcou" placeholder="e.g. China, Japan"></div>
-        <div class="fi"><label>Unit Cost (USD)</label><input type="text" id="vcs" placeholder="e.g. 0.85"></div>
-        <div class="fi"><label>Colorway</label><input type="text" id="vcl" placeholder="e.g. Copper, Ecru"></div>
-        <div class="fi"><label>Suggested Brand</label><select id="vbr"><option value="">Select&hellip;</option><option>Oliver Logan</option><option>Nomad Co.</option><option>Cedar &amp; Stone</option><option>All Brands</option></select></div>
-        <div class="fi s2"><label>Description / Notes</label><textarea id="vde" placeholder="Fabric content, certifications, construction notes&hellip;"></textarea></div>
-      </div>
-      <button class="btn acc" onclick="submitV()" style="width:100%;padding:.7rem">Submit Item</button>
-    </div>
-  </div>
-</div>
-
-<!-- ADD/EDIT MODAL -->
-<div class="ov" id="amod">
-  <div class="modal">
-    <div class="mh"><div class="mt" id="amod-t">Add New Item</div><button class="mc" onclick="cm('amod')">&#x2715;</button></div>
-    <div class="mb">
-      <div class="fg">
-        <div class="fi s2"><label>Item Name *</label><input type="text" id="mn"></div>
-        <div class="fi"><label>Code / SKU</label><input type="text" id="mco"></div>
-        <div class="fi"><label>Category *</label><select id="mcat"><option>Fabric</option><option>Trim</option><option>Label</option></select></div>
-        <div class="fi"><label>Supplier</label><input type="text" id="msu"></div>
-        <div class="fi"><label>Status</label><select id="mst"><option>Approved</option><option>Pending</option><option>Rejected</option></select></div>
-        <div class="fi"><label>Brands (comma sep.)</label><input type="text" id="mbr" placeholder="Oliver Logan, Nomad Co."></div>
-        <div class="fi"><label>Country of Origin</label><input type="text" id="mcou"></div>
-        <div class="fi"><label>Colorway</label><input type="text" id="mcl"></div>
-        <div class="fi"><label>Unit Cost (USD)</label><input type="text" id="mcs" placeholder="0.85"></div>
-        <div class="fi s2"><label>Description / Notes</label><textarea id="mde"></textarea></div>
-        <div class="fi s2"><label>Used in Styles (comma sep.)</label><input type="text" id="msy" placeholder="WSF-256-345, WFX-14-140"></div>
-      </div>
-    </div>
-    <div class="mf"><button class="btn sm out" onclick="cm('amod')">Cancel</button><button class="btn sm" onclick="saveItem()">Save Item</button></div>
-  </div>
-</div>
-
-<!-- DETAIL MODAL -->
-<div class="ov" id="dmod">
-  <div class="modal">
-    <div class="mh">
-      <div><div class="mt" id="dm-n"></div><div id="dm-c" style="font-family:var(--fm);font-size:.62rem;color:var(--g5);margin-top:.22rem"></div></div>
-      <button class="mc" onclick="cm('dmod')">&#x2715;</button>
-    </div>
-    <div class="mb">
-      <div class="dg" id="dm-b"></div>
-      <div style="margin-top:1.1rem">
-        <div style="font-family:var(--fm);font-size:.58rem;letter-spacing:.08em;text-transform:uppercase;color:var(--g5);margin-bottom:.55rem">Used in styles</div>
-        <div class="sc2" id="dm-s"></div>
-      </div>
-    </div>
-    <div class="mf">
-      <button class="btn sm out dd" onclick="delItem()">Delete</button>
-      <button class="btn sm out" onclick="editItem()">Edit</button>
-      <button class="btn sm" onclick="addBOM()">+ Add to BOM</button>
-    </div>
-  </div>
-</div>
-
-<div class="toast" id="toast"></div>
-
-<script>
-const BRANDS=['All','Oliver Logan','Nomad Co.','Cedar & Stone'];
-const CATS=['All','Fabric','Trim','Label'];
-const STS=['All','Approved','Pending'];
-const SEED=[
-  {id:1,name:'Cigarette denim twill',code:'CS1922E-87F',cat:'Fabric',supplier:'Deyao',brands:['Oliver Logan'],color:'Bright Indigo Worn (Wash 345)',desc:'99% Cotton, 1% Spandex. Rigid. Thread: Tobacco.',styles:['WSF-256-345'],status:'Approved',country:'China',cost:''},
-  {id:2,name:'WB shank button',code:'OL-BTN-27L',cat:'Trim',supplier:'Vendor Source',brands:['Oliver Logan'],color:'Copper — Anti Dull',desc:'27L main shank, 1 1/4" keyhole, lockstitch.',styles:['WSF-256-345'],status:'Approved',country:'',cost:''},
-  {id:3,name:'Rivet',code:'OL-RVT-9MM',cat:'Trim',supplier:'Vendor Source',brands:['Oliver Logan'],color:'Copper — Anti Dull',desc:'9mm anti dull copper. 9L per style.',styles:['WSF-256-345'],status:'Approved',country:'',cost:''},
-  {id:4,name:'YKK zipper fly',code:'YKK-4.5',cat:'Trim',supplier:'YKK',brands:['Oliver Logan','Nomad Co.'],color:'Copper w/ Navy Tape',desc:'#4.5 zipper closure with lock pull.',styles:['WSF-256-345','NMD-102-221'],status:'Approved',country:'Japan',cost:''},
-  {id:5,name:'Fly shank button',code:'OL-BTN-24L',cat:'Trim',supplier:'Vendor Source',brands:['Oliver Logan'],color:'Copper — Anti Dull',desc:'24L anti dull copper.',styles:['WSF-256-345'],status:'Approved',country:'',cost:''},
-  {id:6,name:'Main woven label',code:'OL-SMWL-21',cat:'Label',supplier:'Sunat',brands:['Oliver Logan'],color:'White',desc:'18mm×64mm, end fold to 18mm×51mm. Inner WB center back.',styles:['WSF-256-345'],status:'Approved',country:'',cost:''},
-  {id:7,name:'Size tag',code:'OL-SIZE-21',cat:'Label',supplier:'Sunat',brands:['Oliver Logan'],color:'Cream',desc:'13mm×32mm, loop fold to 13mm×26mm.',styles:['WSF-256-345'],status:'Approved',country:'',cost:''},
-  {id:8,name:'Do not remove tag',code:'OL-DNREMV-WT24',cat:'Label',supplier:'Sunat',brands:['Oliver Logan'],color:'Cream text, dark sage bg',desc:'60mm×60mm.',styles:['WSF-256-345'],status:'Approved',country:'',cost:''},
-  {id:9,name:'Hang tag',code:'OL-HT-WT24-LUDLOW',cat:'Label',supplier:'Sunat',brands:['Oliver Logan'],color:'Cream/dark sage 2-card',desc:'1st: 55mm×75mm. 2nd: 55mm×95mm.',styles:['WSF-256-345'],status:'Approved',country:'',cost:''},
-  {id:10,name:'PO / SKU label',code:'OL-PO-01',cat:'Label',supplier:'Winner',brands:['Oliver Logan'],color:'White label, black print',desc:'Printed poly sateen. 3 1/4"×5/8" incl 1/8" seam. Interior WB behind care label.',styles:['WSF-256-345'],status:'Approved',country:'',cost:''},
-  {id:11,name:'Care label',code:'OL-CARE-01',cat:'Label',supplier:'Vendor Source',brands:['Oliver Logan'],color:'Cream',desc:'Vendor source care label.',styles:['WSF-256-345'],status:'Approved',country:'',cost:''},
-  {id:12,name:'Stretch denim',code:'ND-STR-88F',cat:'Fabric',supplier:'Cone Denim',brands:['Nomad Co.'],color:'Medium Indigo',desc:'88% Cotton, 10% Polyester, 2% Spandex.',styles:['NMD-102-221','NMD-88-190'],status:'Approved',country:'USA',cost:''},
-];
-let db=JSON.parse(localStorage.getItem('sbg')||'null')||SEED.map(x=>({...x}));
-let nid=Math.max(...db.map(d=>d.id))+1;
-let fB='All',fC='All',fS='All',eid=null,did=null,bom=[];
-
-function sv(){localStorage.setItem('sbg',JSON.stringify(db));}
-function g(id){return(document.getElementById(id)||{}).value||'';}
-
-function go(p,el){
-  document.querySelectorAll('.page').forEach(x=>x.classList.remove('on'));
-  document.querySelectorAll('.ntab').forEach(x=>x.classList.remove('on'));
-  document.getElementById('page-'+p).classList.add('on');
-  el.classList.add('on');
-  if(p==='lib')renderLib();
-  if(p==='bom'){renderBL();renderBIL();}
-  if(p==='tp')renderTP();
-}
-
-function renderLib(){
-  renderStats();renderFilters();renderGrid();
-  document.getElementById('lmeta').innerHTML=db.length+' items &nbsp;&middot;&nbsp; '+new Date().toLocaleDateString('en-US',{month:'long',day:'numeric',year:'numeric'});
-}
-function renderStats(){
-  document.getElementById('stats').innerHTML=[
-    [db.length,'Total'],[db.filter(d=>d.cat==='Fabric').length,'Fabrics'],
-    [db.filter(d=>d.cat==='Trim').length,'Trims'],[db.filter(d=>d.cat==='Label').length,'Labels']
-  ].map(([n,l])=>`<div class="sc"><div class="sn">${n}</div><div class="sl">${l}</div></div>`).join('');
-}
-function renderFilters(){
-  document.getElementById('brf').innerHTML=BRANDS.map(b=>`<button class="pill${fB===b?' on':''}" onclick="sf('b','${b}')">${b}</button>`).join('');
-  document.getElementById('ctf').innerHTML=CATS.map(c=>`<button class="pill${c!=='All'?' c'+c[0].toLowerCase():''}${fC===c?' on':''}" onclick="sf('c','${c}')">${c}</button>`).join('');
-  document.getElementById('stf').innerHTML=STS.map(s=>`<button class="pill${fS===s?' on':''}" onclick="sf('s','${s}')">${s}</button>`).join('');
-}
-function sf(t,v){if(t==='b')fB=v;if(t==='c')fC=v;if(t==='s')fS=v;renderLib();}
-function filtered(){
-  const q=(g('lq')).toLowerCase();
-  return db.filter(d=>{
-    return(fB==='All'||d.brands.includes(fB))&&(fC==='All'||d.cat===fC)&&(fS==='All'||d.status===fS)&&
-    (!q||[d.name,d.code,d.supplier,d.color,d.desc].join(' ').toLowerCase().includes(q));
-  });
-}
-function cl(c){return c==='Fabric'?'fab':c==='Trim'?'tri':'lab';}
-function renderGrid(){
-  const it=filtered();
-  if(!it.length){document.getElementById('grid').innerHTML='<div class="es"><div class="est">Nothing found</div><div class="ess">Adjust filters</div></div>';return;}
-  document.getElementById('grid').innerHTML=it.map((d,i)=>`
-    <div class="card ${cl(d.cat)}" onclick="openDetail(${d.id})" style="animation-delay:${Math.min(i*.03,.3)}s">
-      <div><span class="cc">${d.cat}</span></div>
-      <div class="cn">${d.name}</div>
-      <div class="cco">${d.code||'—'}</div>
-      <div class="cd">${[d.supplier,d.color].filter(Boolean).join(' · ')}</div>
-      <div class="cf2">
-        <div style="display:flex;gap:.28rem;flex-wrap:wrap">${d.brands.map(b=>`<span class="bt">${b}</span>`).join('')}</div>
-        <span class="cu s${(d.status||'a')[0].toLowerCase()}"><span class="sd"></span>${d.styles.length} style${d.styles.length!==1?'s':''}</span>
-      </div>
-    </div>`).join('');
-}
-
-function openDetail(id){
-  did=id;const d=db.find(x=>x.id===id);
-  document.getElementById('dm-n').textContent=d.name;
-  document.getElementById('dm-c').textContent=d.code||'';
-  document.getElementById('dm-b').innerHTML=`
-    <span class="dk">Category</span><span class="dv">${d.cat}</span>
-    <span class="dk">Supplier</span><span class="dv">${d.supplier||'—'}</span>
-    <span class="dk">Status</span><span class="dv s${(d.status||'a')[0].toLowerCase()}"><span class="sd"></span>${d.status||'—'}</span>
-    <span class="dk">Colorway</span><span class="dv">${d.color||'—'}</span>
-    <span class="dk">Country</span><span class="dv">${d.country||'—'}</span>
-    <span class="dk">Unit Cost</span><span class="dv">${d.cost?'$'+d.cost:'—'}</span>
-    <span class="dk">Brands</span><span class="dv">${d.brands.join(', ')}</span>
-    <div class="dvd"></div>
-    <span class="dk">Notes</span><span class="dv">${d.desc||'—'}</span>`;
-  document.getElementById('dm-s').innerHTML=d.styles.length?d.styles.map(s=>`<span class="sch">${s}</span>`).join(''):'<span style="font-family:var(--fm);font-size:.62rem;color:var(--g5)">No styles yet</span>';
-  om('dmod');
-}
-function addBOM(){
-  const d=db.find(x=>x.id===did);
-  if(!bom.find(x=>x.id===d.id)){bom.push(d);toast(d.name+' added to BOM');}
-  else toast('Already in BOM');
-  cm('dmod');renderBIL();
-}
-function editItem(){cm('dmod');openEdit(did);}
-function delItem(){
-  if(!confirm('Delete this item?'))return;
-  db=db.filter(x=>x.id!==did);sv();cm('dmod');renderLib();toast('Item deleted');
-}
-
-function addModal(){
-  eid=null;document.getElementById('amod-t').textContent='Add New Item';
-  ['mn','mco','msu','mbr','mcou','mcl','mcs','mde','msy'].forEach(id=>document.getElementById(id).value='');
-  document.getElementById('mcat').value='Fabric';document.getElementById('mst').value='Approved';
-  om('amod');
-}
-function openEdit(id){
-  eid=id;const d=db.find(x=>x.id===id);
-  document.getElementById('amod-t').textContent='Edit Item';
-  document.getElementById('mn').value=d.name;document.getElementById('mco').value=d.code||'';
-  document.getElementById('mcat').value=d.cat;document.getElementById('msu').value=d.supplier||'';
-  document.getElementById('mst').value=d.status||'Approved';document.getElementById('mbr').value=d.brands.join(', ');
-  document.getElementById('mcou').value=d.country||'';document.getElementById('mcl').value=d.color||'';
-  document.getElementById('mcs').value=d.cost||'';document.getElementById('mde').value=d.desc||'';
-  document.getElementById('msy').value=d.styles.join(', ');
-  om('amod');
-}
-function saveItem(){
-  const name=g('mn');if(!name){toast('Name required');return;}
-  const item={id:eid||nid++,name,code:g('mco'),cat:g('mcat'),supplier:g('msu'),status:g('mst'),
-    brands:g('mbr').split(',').map(s=>s.trim()).filter(Boolean)||['Oliver Logan'],
-    country:g('mcou'),color:g('mcl'),cost:g('mcs'),desc:g('mde'),
-    styles:g('msy').split(',').map(s=>s.trim()).filter(Boolean)};
-  if(!item.brands.length)item.brands=['Oliver Logan'];
-  if(eid)db=db.map(x=>x.id===eid?item:x);else db.push(item);
-  sv();cm('amod');renderLib();toast(eid?'Item updated':'Item added');
-}
-
-function renderBL(){
-  const q=(g('blq')).toLowerCase();
-  const it=db.filter(d=>!q||[d.name,d.code,d.supplier,d.cat].join(' ').toLowerCase().includes(q));
-  document.getElementById('bll').innerHTML=it.length?it.map(d=>`
-    <div class="li" onclick="addBD(${d.id})">
-      <div><div class="lin">${d.name}</div><div class="lic">${d.code||d.cat}</div></div>
-      <span class="lai">+</span>
-    </div>`).join(''):'<div class="bem">No results</div>';
-}
-function addBD(id){
-  const d=db.find(x=>x.id===id);
-  if(!bom.find(x=>x.id===id)){bom.push(d);toast(d.name+' added');renderBIL();}
-  else toast('Already in BOM');
-}
-function renderBIL(){
-  document.getElementById('bcnt').textContent=bom.length+' item'+(bom.length!==1?'s':'');
-  if(!bom.length){document.getElementById('bil').innerHTML='<div class="bem">No items yet. Search library &rarr;</div>';return;}
-  let h='';
-  ['Fabric','Trim','Label'].forEach(c=>{
-    bom.filter(x=>x.cat===c).forEach(d=>{
-      h+=`<div class="bir"><span class="bic ${cl(c)} cc">${c}</span><div><div class="bin">${d.name}</div><div class="bio">${d.code||''}</div></div><button class="brm" onclick="rmBOM(${d.id})">&#xd7;</button></div>`;
-    });
-  });
-  document.getElementById('bil').innerHTML=h;
-}
-function rmBOM(id){bom=bom.filter(x=>x.id!==id);renderBIL();toast('Removed');}
-function clearBOM(){if(!bom.length)return;bom=[];renderBIL();toast('BOM cleared');}
-function toTP(){
-  const map={bb:'tb',bd:'td',bs:'ts',bn:'tn',bse:'tse',bf:'tf',bc:'tc',bv:'tv'};
-  Object.entries(map).forEach(([b,t])=>{const v=g(b);if(v)document.getElementById(t).value=v;});
-  renderTP();
-  document.querySelectorAll('.ntab').forEach(x=>x.classList.remove('on'));
-  document.querySelectorAll('.page').forEach(x=>x.classList.remove('on'));
-  document.querySelector('[data-p="tp"]').classList.add('on');
-  document.getElementById('page-tp').classList.add('on');
-  toast('Sent to Tech Pack');
-}
-
-function renderTP(){
-  const br=g('tb'),dv=g('td'),st=g('ts'),sn=g('tn'),se=g('tse'),fa=g('tf'),co=g('tc'),sa=g('tsa'),sz=g('tsz'),de=g('tde'),ch=g('tch'),vn=g('tv');
-  if(!br&&!st)return;
-  const today=new Date().toISOString().split('T')[0];
-  let rows='';
-  ['Fabric','Trim','Label'].forEach(c=>{
-    const it=bom.filter(x=>x.cat===c);if(!it.length)return;
-    rows+=`<tr class="tbsr"><td colspan="6">${c}s</td></tr>`;
-    rows+=it.map(d=>`<tr><td>${d.name}</td><td style="font-family:var(--fm);font-size:.62rem">${d.code||'—'}</td><td>${d.supplier||'—'}</td><td>${d.color||'—'}</td><td>${d.country||'—'}</td><td>${d.cost?'$'+d.cost:'—'}</td></tr>`).join('');
-  });
-  document.getElementById('tpv').innerHTML=`
-    <div class="tph">
-      <div><div class="tpbn">${br}</div><div class="tpbg">Sierra Brands Group</div></div>
-      <div class="tpmc">
-        <div class="tpmr"><span class="tpmk">Brand</span><span class="tpmv">${br}</span></div>
-        <div class="tpmr"><span class="tpmk">Division</span><span class="tpmv">${dv||'—'}</span></div>
-        <div class="tpmr"><span class="tpmk">Style #</span><span class="tpmv">${st}${sn?' ('+sn+')':''}</span></div>
-        <div class="tpmr"><span class="tpmk">Fabric</span><span class="tpmv">${fa||'—'}</span></div>
-        <div class="tpmr"><span class="tpmk">Season</span><span class="tpmv">${se||'—'}</span></div>
-        <div class="tpmr"><span class="tpmk">Date</span><span class="tpmv">${today}</span></div>
-      </div>
-      <div class="tpmc">
-        <div class="tpmr"><span class="tpmk">Sample #</span><span class="tpmv">${sa||'—'}</span></div>
-        <div class="tpmr"><span class="tpmk">Sample Size</span><span class="tpmv">${sz||'—'}</span></div>
-        <div class="tpmr"><span class="tpmk">Color / Wash</span><span class="tpmv">${co||'—'}</span></div>
-        <div class="tpmr"><span class="tpmk">Designed By</span><span class="tpmv">${de||'—'}</span></div>
-        <div class="tpmr"><span class="tpmk">Checked By</span><span class="tpmv">${ch||'—'}</span></div>
-        <div class="tpmr"><span class="tpmk">Vendor</span><span class="tpmv">${vn||'—'}</span></div>
-      </div>
-    </div>
-    ${rows?`<div class="tpsl">Bill of Materials</div><table class="tbt"><thead><tr><th>Item</th><th>Code</th><th>Supplier</th><th>Colorway</th><th>Country</th><th>Unit Cost</th></tr></thead><tbody>${rows}</tbody></table>`:`<div style="border:1px dashed var(--g1);padding:2.5rem;text-align:center;margin-top:1rem;color:var(--g5);font-family:var(--fm);font-size:.62rem;letter-spacing:.08em;text-transform:uppercase">Build a BOM in the BOM Builder to populate this section</div>`}`;
-}
-
-function submitV(){
-  const n=g('vn'),c=g('vcat'),s=g('vsu');
-  if(!n||!c||!s){toast('Complete required fields');return;}
-  const br=g('vbr');
-  db.push({id:nid++,name:n,code:g('vco'),cat:c,supplier:s,
-    brands:br&&br!=='All Brands'?[br]:['Oliver Logan','Nomad Co.','Cedar & Stone'],
-    color:g('vcl'),country:g('vcou'),cost:g('vcs'),desc:g('vde'),styles:[],status:'Pending'});
-  sv();
-  ['vn','vco','vsu','vcou','vcs','vcl','vde'].forEach(id=>document.getElementById(id).value='');
-  document.getElementById('vcat').value='';document.getElementById('vbr').value='';
-  const b=document.getElementById('vsb');b.style.display='block';setTimeout(()=>b.style.display='none',4000);
-}
-
-function om(id){document.getElementById(id).classList.add('on');}
-function cm(id){document.getElementById(id).classList.remove('on');}
-document.querySelectorAll('.ov').forEach(m=>m.addEventListener('click',e=>{if(e.target===m)m.classList.remove('on');}));
-
-function toast(msg){
-  const t=document.getElementById('toast');t.textContent=msg;t.classList.add('on');
-  clearTimeout(t._t);t._t=setTimeout(()=>t.classList.remove('on'),2200);
-}
-function exportDB(){
-  const a=document.createElement('a');
-  a.href=URL.createObjectURL(new Blob([JSON.stringify(db,null,2)],{type:'application/json'}));
-  a.download='sbg-library-'+new Date().toISOString().split('T')[0]+'.json';a.click();
-  toast('Library exported');
-}
-
-renderLib();renderBL();
-</script>
 </body>
 </html>
