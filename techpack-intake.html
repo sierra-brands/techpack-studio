@@ -1,0 +1,760 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tech Pack Intake — Sierra Brands Group</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=DM+Mono:wght@300;400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --ink:#16130F;--ink-light:#3D3830;--ink-muted:#8A8278;--ink-faint:#C4BDB4;
+  --cream:#F6F1E9;--cream-dark:#EDE6D6;--white:#FFFFFF;
+  --accent:#C4622D;--accent-pale:#F5E6DC;--accent-light:#E8956A;
+  --sage:#4A5E4E;--sage-light:#E8EDE9;
+  --border:rgba(22,19,15,0.11);--border-med:rgba(22,19,15,0.22);
+  --sans:'DM Sans',sans-serif;--serif:'Cormorant Garamond',serif;--mono:'DM Mono',monospace;
+}
+body{font-family:var(--sans);background:var(--cream);color:var(--ink);min-height:100vh;font-size:14px;line-height:1.6;}
+
+/* ── SHELL ── */
+.shell{max-width:780px;margin:0 auto;padding:48px 24px 80px;}
+
+/* ── HEADER ── */
+.intake-header{margin-bottom:48px;}
+.intake-eyebrow{font-family:var(--mono);font-size:10px;letter-spacing:0.2em;text-transform:uppercase;color:var(--ink-muted);margin-bottom:10px;}
+.intake-title{font-family:var(--serif);font-size:42px;font-weight:300;line-height:1.1;color:var(--ink);}
+.intake-title em{font-style:italic;color:var(--ink-muted);}
+.intake-sub{font-size:13px;color:var(--ink-muted);margin-top:10px;max-width:480px;line-height:1.7;}
+
+/* ── PROGRESS ── */
+.progress-wrap{margin-bottom:40px;}
+.progress-steps{display:flex;gap:0;margin-bottom:10px;}
+.progress-step{flex:1;display:flex;flex-direction:column;align-items:center;gap:6px;position:relative;}
+.progress-step:not(:last-child)::after{content:'';position:absolute;top:14px;left:50%;width:100%;height:1px;background:var(--border-med);z-index:0;}
+.ps-dot{width:28px;height:28px;border-radius:50%;border:1.5px solid var(--border-med);background:var(--cream);display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:10px;color:var(--ink-muted);position:relative;z-index:1;transition:all 0.25s;}
+.ps-label{font-family:var(--mono);font-size:9px;letter-spacing:0.12em;text-transform:uppercase;color:var(--ink-faint);text-align:center;transition:color 0.25s;}
+.progress-step.done .ps-dot{background:var(--sage);border-color:var(--sage);color:white;}
+.progress-step.done .ps-label{color:var(--sage);}
+.progress-step.active .ps-dot{background:var(--ink);border-color:var(--ink);color:var(--cream);}
+.progress-step.active .ps-label{color:var(--ink);}
+
+/* ── STEP CARD ── */
+.step{display:none;}
+.step.active{display:block;}
+
+.step-card{background:var(--white);border:1px solid var(--border);border-radius:8px;overflow:hidden;}
+
+.step-card-header{padding:24px 28px 20px;border-bottom:1px solid var(--border);display:flex;align-items:flex-start;gap:16px;}
+.step-number{font-family:var(--serif);font-size:36px;font-weight:300;font-style:italic;color:var(--ink-faint);line-height:1;flex-shrink:0;}
+.step-title-block{}
+.step-title{font-family:var(--serif);font-size:24px;font-weight:300;color:var(--ink);line-height:1.2;}
+.step-desc{font-size:12px;color:var(--ink-muted);margin-top:4px;line-height:1.6;}
+
+.step-body{padding:28px;}
+
+/* ── FIELDS ── */
+.field{margin-bottom:20px;}
+.field:last-child{margin-bottom:0;}
+.field label{display:block;font-family:var(--mono);font-size:9px;letter-spacing:0.18em;text-transform:uppercase;color:var(--ink-muted);margin-bottom:6px;}
+.field input,.field select,.field textarea{
+  width:100%;font-family:var(--sans);font-size:13px;
+  padding:10px 13px;border:1px solid var(--border-med);
+  border-radius:4px;background:var(--cream);color:var(--ink);
+  outline:none;transition:border-color 0.15s,background 0.15s;
+}
+.field input:focus,.field select:focus,.field textarea:focus{
+  border-color:var(--accent);background:var(--white);
+}
+.field input::placeholder,.field textarea::placeholder{color:var(--ink-faint);}
+.field textarea{resize:vertical;min-height:80px;}
+.field select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' fill='none'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%238A8278' stroke-width='1.5' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center;padding-right:32px;}
+
+.field-row{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+.field-row-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;}
+
+.field-hint{font-size:11px;color:var(--ink-faint);margin-top:5px;font-family:var(--mono);}
+
+/* ── SECTION DIVIDER ── */
+.section-divider{display:flex;align-items:center;gap:12px;margin:24px 0 20px;}
+.section-divider-label{font-family:var(--mono);font-size:9px;letter-spacing:0.18em;text-transform:uppercase;color:var(--accent);white-space:nowrap;}
+.section-divider-line{flex:1;height:1px;background:var(--accent-pale);}
+
+/* ── CONSTRUCTION CALLOUTS ── */
+.callout-list{display:flex;flex-direction:column;gap:8px;margin-bottom:12px;}
+.callout-item{display:flex;align-items:center;gap:10px;padding:10px 12px;background:var(--cream);border:1px solid var(--border);border-radius:4px;}
+.callout-tag{font-family:var(--mono);font-size:9px;letter-spacing:0.1em;text-transform:uppercase;padding:3px 8px;border-radius:2px;background:var(--accent-pale);color:var(--accent);white-space:nowrap;}
+.callout-text{font-size:13px;color:var(--ink);flex:1;}
+.callout-remove{background:none;border:none;cursor:pointer;color:var(--ink-faint);font-size:16px;padding:0 4px;line-height:1;transition:color 0.15s;}
+.callout-remove:hover{color:var(--accent);}
+
+.add-callout-row{display:flex;gap:8px;align-items:flex-start;}
+.add-callout-row select{width:130px;flex-shrink:0;}
+.add-callout-row input{flex:1;}
+.add-callout-btn{padding:10px 16px;background:var(--ink);color:var(--cream);border:none;border-radius:4px;font-family:var(--mono);font-size:10px;letter-spacing:0.1em;text-transform:uppercase;cursor:pointer;white-space:nowrap;transition:background 0.15s;}
+.add-callout-btn:hover{background:var(--ink-light);}
+
+/* ── LIBRARY PULL SECTION ── */
+.library-note{background:var(--sage-light);border:1px solid rgba(74,94,78,0.2);border-radius:4px;padding:14px 16px;margin-bottom:20px;display:flex;gap:12px;align-items:flex-start;}
+.library-note-icon{font-size:16px;flex-shrink:0;margin-top:1px;}
+.library-note-text{font-size:12px;color:var(--sage);line-height:1.6;}
+.library-note-text strong{font-weight:500;}
+
+.library-items{display:flex;flex-direction:column;gap:6px;}
+.library-item{display:flex;align-items:center;justify-content:space-between;padding:9px 12px;background:var(--cream);border:1px solid var(--border);border-radius:4px;}
+.library-item-left{display:flex;align-items:center;gap:10px;}
+.lib-badge{font-family:var(--mono);font-size:8px;letter-spacing:0.12em;text-transform:uppercase;padding:2px 7px;border-radius:2px;}
+.lib-fab{background:#E8EDE9;color:#4A5E4E;}
+.lib-trim{background:var(--accent-pale);color:var(--accent);}
+.lib-label{background:var(--cream-dark);color:var(--ink-muted);}
+.library-item-name{font-size:12px;font-weight:500;color:var(--ink);}
+.library-item-code{font-family:var(--mono);font-size:10px;color:var(--ink-faint);}
+.lib-check{width:16px;height:16px;accent-color:var(--sage);}
+
+/* ── REVIEW ── */
+.review-section{margin-bottom:24px;}
+.review-section-title{font-family:var(--mono);font-size:9px;letter-spacing:0.18em;text-transform:uppercase;color:var(--accent);margin-bottom:10px;padding-bottom:8px;border-bottom:1px solid var(--accent-pale);}
+.review-grid{display:grid;grid-template-columns:160px 1fr;gap:6px 16px;}
+.rk{font-family:var(--mono);font-size:10px;color:var(--ink-muted);letter-spacing:0.05em;}
+.rv{font-size:13px;color:var(--ink);font-weight:400;}
+.review-callouts{display:flex;flex-direction:column;gap:5px;margin-top:4px;}
+.review-callout{display:flex;gap:8px;align-items:center;font-size:12px;}
+
+/* ── FOOTER ACTIONS ── */
+.step-footer{display:flex;justify-content:space-between;align-items:center;margin-top:24px;}
+.btn{font-family:var(--sans);font-size:12px;font-weight:500;letter-spacing:0.05em;padding:11px 22px;border-radius:4px;cursor:pointer;transition:all 0.15s;border:1px solid transparent;}
+.btn-ghost{background:transparent;border-color:var(--border-med);color:var(--ink-muted);}
+.btn-ghost:hover{color:var(--ink);border-color:var(--border-med);}
+.btn-primary{background:var(--ink);color:var(--cream);border-color:var(--ink);}
+.btn-primary:hover{background:var(--ink-light);}
+.btn-accent{background:var(--accent);color:white;border-color:var(--accent);}
+.btn-accent:hover{background:#B5571E;}
+.btn:disabled{opacity:0.4;cursor:not-allowed;}
+
+.step-counter{font-family:var(--mono);font-size:10px;color:var(--ink-faint);letter-spacing:0.1em;}
+
+/* ── SUCCESS ── */
+.success-screen{display:none;text-align:center;padding:60px 32px;}
+.success-screen.active{display:block;}
+.success-icon{font-family:var(--serif);font-size:64px;font-style:italic;color:var(--ink-faint);margin-bottom:20px;}
+.success-title{font-family:var(--serif);font-size:32px;font-weight:300;margin-bottom:10px;}
+.success-sub{font-size:13px;color:var(--ink-muted);margin-bottom:32px;max-width:400px;margin-left:auto;margin-right:auto;line-height:1.7;}
+.success-actions{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;}
+
+/* ── OUTPUT PREVIEW ── */
+.output-preview{background:var(--white);border:1px solid var(--border);border-radius:8px;overflow:hidden;margin-top:32px;text-align:left;}
+.output-header{background:var(--ink);color:var(--cream);padding:14px 20px;display:grid;grid-template-columns:auto 1fr 1fr;gap:20px;align-items:start;}
+.oh-brand{font-family:var(--serif);font-size:13px;font-weight:300;letter-spacing:0.08em;}
+.oh-sub{font-family:var(--mono);font-size:7px;letter-spacing:0.2em;text-transform:uppercase;color:rgba(246,241,233,0.4);margin-top:2px;}
+.oh-meta{display:grid;grid-template-columns:auto 1fr;gap:2px 8px;font-size:10px;}
+.oh-k{font-family:var(--mono);font-size:7.5px;letter-spacing:0.1em;text-transform:uppercase;color:rgba(246,241,233,0.4);}
+.oh-v{color:var(--cream);}
+.output-page{padding:20px;border-bottom:1px solid var(--border);}
+.output-page:last-child{border-bottom:none;}
+.output-page-title{font-family:var(--serif);font-size:18px;font-style:italic;font-weight:300;color:var(--ink);margin-bottom:12px;}
+.output-table{width:100%;border-collapse:collapse;font-size:11px;}
+.output-table th{font-family:var(--mono);font-size:8px;letter-spacing:0.14em;text-transform:uppercase;color:var(--ink-muted);padding:7px 10px;text-align:left;background:var(--cream);border-bottom:1px solid var(--border);font-weight:400;}
+.output-table td{padding:9px 10px;border-bottom:1px solid var(--border);color:var(--ink);vertical-align:middle;}
+.output-table tr:last-child td{border-bottom:none;}
+.output-section-row td{font-family:var(--mono);font-size:8px;letter-spacing:0.14em;text-transform:uppercase;color:var(--accent);background:var(--accent-pale)!important;padding:6px 10px;}
+
+/* ── TOAST ── */
+.toast{position:fixed;bottom:24px;right:24px;background:var(--ink);color:var(--cream);padding:10px 18px;border-radius:4px;font-family:var(--mono);font-size:11px;letter-spacing:0.06em;z-index:999;opacity:0;transform:translateY(8px);transition:all 0.22s;pointer-events:none;}
+.toast.show{opacity:1;transform:translateY(0);}
+</style>
+</head>
+<body>
+
+<div class="shell">
+
+  <!-- HEADER -->
+  <div class="intake-header">
+    <div class="intake-eyebrow">Sierra Brands Group · Oliver Logan</div>
+    <div class="intake-title">New Style <em>Intake</em></div>
+    <div class="intake-sub">Fill in the three sections below. Trims and labels auto-pull from the library. Target specs are added separately by Lauren.</div>
+  </div>
+
+  <!-- PROGRESS -->
+  <div class="progress-wrap">
+    <div class="progress-steps" id="progress-steps">
+      <div class="progress-step active" id="ps-0">
+        <div class="ps-dot">1</div>
+        <div class="ps-label">Style Header</div>
+      </div>
+      <div class="progress-step" id="ps-1">
+        <div class="ps-dot">2</div>
+        <div class="ps-label">Fabric & Wash</div>
+      </div>
+      <div class="progress-step" id="ps-2">
+        <div class="ps-dot">3</div>
+        <div class="ps-label">Construction</div>
+      </div>
+      <div class="progress-step" id="ps-3">
+        <div class="ps-dot">4</div>
+        <div class="ps-label">Review</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FORM STEPS -->
+  <div id="form-steps">
+
+    <!-- ── STEP 1: STYLE HEADER ── -->
+    <div class="step active" id="step-0">
+      <div class="step-card">
+        <div class="step-card-header">
+          <div class="step-number">01</div>
+          <div class="step-title-block">
+            <div class="step-title">Style Header</div>
+            <div class="step-desc">Core identifying information for this style. This populates the header block on every page of the tech pack.</div>
+          </div>
+        </div>
+        <div class="step-body">
+          <div class="field-row">
+            <div class="field">
+              <label>Brand</label>
+              <select id="s-brand">
+                <option value="Oliver Logan">Oliver Logan</option>
+                <option value="Tilly's">Tilly's</option>
+                <option value="Nordstrom Rack">Nordstrom Rack</option>
+                <option value="Cloak">Cloak</option>
+              </select>
+            </div>
+            <div class="field">
+              <label>Division</label>
+              <select id="s-division">
+                <option value="Womens">Womens</option>
+                <option value="Mens">Mens</option>
+                <option value="Boys">Boys</option>
+                <option value="Girls">Girls</option>
+              </select>
+            </div>
+          </div>
+          <div class="field-row">
+            <div class="field">
+              <label>Style #</label>
+              <input type="text" id="s-style" placeholder="e.g. WCX-181-047">
+              <div class="field-hint">Include wash code at end</div>
+            </div>
+            <div class="field">
+              <label>Style Name</label>
+              <input type="text" id="s-name" placeholder="e.g. Jasper">
+            </div>
+          </div>
+          <div class="field-row">
+            <div class="field"><label>Season</label><input type="text" id="s-season" placeholder="e.g. Holiday ' 26, Spring '27"></div>
+            <div class="field">
+              <label>Sample Size</label>
+              <input type="text" id="s-size" placeholder="27">
+            </div>
+          </div>
+          <div class="field-row">
+            <div class="field">
+              <label>Vendor</label>
+              <input type="text" id="s-vendor" placeholder="e.g. Grand Wish">
+            </div>
+            <div class="field">
+              <label>Sample #</label>
+              <select id="s-sample">
+                <option value="Proto">Proto</option>
+                <option value="1st">1st</option>
+                <option value="2nd">2nd</option>
+                <option value="TOP">TOP</option>
+              </select>
+            </div>
+          </div>
+          <div class="field-row">
+            <div class="field">
+              <label>Designed By</label>
+              <input type="text" id="s-designer" placeholder="Lauren">
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="step-footer">
+        <span class="step-counter">Step 1 of 4</span>
+        <button class="btn btn-primary" onclick="goTo(1)">Next — Fabric & Wash →</button>
+      </div>
+    </div>
+
+    <!-- ── STEP 2: FABRIC & WASH ── -->
+    <div class="step" id="step-1">
+      <div class="step-card">
+        <div class="step-card-header">
+          <div class="step-number">02</div>
+          <div class="step-title-block">
+            <div class="step-title">Fabric & Wash Details</div>
+            <div class="step-desc">Mill, fabric code, fiber content, and wash information. This populates the Fabric / Wash Details page.</div>
+          </div>
+        </div>
+        <div class="step-body">
+          <div class="section-divider"><div class="section-divider-label">Fabric</div><div class="section-divider-line"></div></div>
+          <div class="field-row">
+            <div class="field">
+              <label>Mill</label>
+              <input type="text" id="f-mill" placeholder="e.g. Deyao">
+            </div>
+            <div class="field">
+              <label>Fabric Code</label>
+              <input type="text" id="f-code" placeholder="e.g. C2688X-6T">
+            </div>
+          </div>
+          <div class="field">
+            <label>Fiber Content</label>
+            <input type="text" id="f-content" placeholder="e.g. 100% Cotton">
+          </div>
+          <div class="field-row">
+            <div class="field">
+              <label>Fabric Construction</label>
+              <select id="f-construction">
+                <option value="Twill">Twill</option>
+                <option value="Sateen">Sateen</option>
+                <option value="Canvas">Canvas</option>
+                <option value="Dobby">Dobby</option>
+                <option value="Other">Other</option>
+              </select>
+            </div>
+            <div class="field">
+              <label>Stretch</label>
+              <select id="f-stretch">
+                <option value="Super Stretch">Super Stretch</option>
+                <option value="Compact Super Stretch">Compact Super Stretch</option>
+                <option value="Comfort Stretch">Comfort Stretch</option>
+                <option value="Rigid">Rigid</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="section-divider"><div class="section-divider-label">Wash</div><div class="section-divider-line"></div></div>
+          <div class="field-row">
+            <div class="field">
+              <label>Wash Code</label>
+              <input type="text" id="f-wash-code" placeholder="e.g. 047">
+            </div>
+            <div class="field">
+              <label>Wash Name</label>
+              <input type="text" id="f-wash-name" placeholder="e.g. Vintage Indigo">
+            </div>
+          </div>
+          <div class="field-row">
+            <div class="field">
+              <label>Thread Color</label>
+              <input type="text" id="f-thread" placeholder="e.g. Tobacco">
+            </div>
+          </div>
+          <div class="field">
+            <label>Wash Notes</label>
+            <textarea id="f-wash-notes" placeholder="e.g. Follow photos for wash. Special instructions for mill…"></textarea>
+          </div>
+        </div>
+      </div>
+      <div class="step-footer">
+        <button class="btn btn-ghost" onclick="goTo(0)">← Back</button>
+        <span class="step-counter">Step 2 of 4</span>
+        <button class="btn btn-primary" onclick="goTo(2)">Next — Construction →</button>
+      </div>
+    </div>
+
+    <!-- ── STEP 3: CONSTRUCTION ── -->
+    <div class="step" id="step-2">
+      <div class="step-card">
+        <div class="step-card-header">
+          <div class="step-number">03</div>
+          <div class="step-title-block">
+            <div class="step-title">Construction Callouts</div>
+            <div class="step-desc">Key hardware and construction details that appear as callouts on the construction diagram page.</div>
+          </div>
+        </div>
+        <div class="step-body">
+
+          <div class="library-note">
+            <div class="library-note-icon">✓</div>
+            <div class="library-note-text"><strong>Trims & labels auto-pulled from library.</strong> Add any style-specific construction callouts below — hardware placements, stitch details, special finishes.</div>
+          </div>
+
+          <div class="section-divider"><div class="section-divider-label">Callouts</div><div class="section-divider-line"></div></div>
+
+          <div class="callout-list" id="callout-list"></div>
+
+          <div class="add-callout-row">
+            <select id="callout-type">
+              <option value="Hardware">Hardware</option>
+              <option value="Zipper">Zipper</option>
+              <option value="Button">Button</option>
+              <option value="Pocket">Pocket</option>
+              <option value="Stitch">Stitch</option>
+              <option value="Seam">Seam</option>
+              <option value="Hem">Hem</option>
+              <option value="Finish">Finish</option>
+              <option value="Other">Other</option>
+            </select>
+            <input type="text" id="callout-text" placeholder="e.g. YKK #4.5 Zipper Fly" onkeydown="if(event.key==='Enter')addCallout()">
+            <button class="add-callout-btn" onclick="addCallout()">+ Add</button>
+          </div>
+
+          <div class="section-divider" style="margin-top:24px;"><div class="section-divider-label">Fly & Closure</div><div class="section-divider-line"></div></div>
+          <div class="field-row">
+            <div class="field">
+              <label>Fly Type</label>
+              <select id="c-fly">
+                <option value="Zipper Fly">Zipper Fly</option>
+                <option value="Button Fly">Button Fly</option>
+              </select>
+            </div>
+            <div class="field" id="c-fly-detail-wrap">
+              <label>Zipper Spec</label>
+              <input type="text" id="c-fly-detail" placeholder="e.g. YKK #4.5 Copper w/ Navy Tape">
+            </div>
+          </div>
+
+          <div class="section-divider" style="margin-top:24px;"><div class="section-divider-label">Silhouette</div><div class="section-divider-line"></div></div>
+          <div class="field-row">
+            <div class="field">
+              <label>Fit / Silhouette</label>
+              <select id="c-silhouette">
+                <option value="Cigarette">Cigarette</option>
+                <option value="Barrel">Barrel</option>
+                <option value="Straight">Straight</option>
+                <option value="Slim">Slim</option>
+                <option value="Bootcut">Bootcut</option>
+                <option value="Flare">Flare</option>
+                <option value="Wide Leg">Wide Leg</option>
+                <option value="Skinny">Skinny</option>
+              </select>
+            </div>
+            <div class="field">
+              <label>Rise</label>
+              <select id="c-rise">
+                <option value="High rise">High rise</option>
+                <option value="Mid rise">Mid rise</option>
+                <option value="Low rise">Low rise</option>
+              </select>
+            </div>
+          </div>
+          <div class="field">
+            <label>Additional construction notes</label>
+            <textarea id="c-notes" placeholder="Any other details for the factory…"></textarea>
+          </div>
+        </div>
+      </div>
+      <div class="step-footer">
+        <button class="btn btn-ghost" onclick="goTo(1)">← Back</button>
+        <span class="step-counter">Step 3 of 4</span>
+        <button class="btn btn-primary" onclick="goTo(3)">Review →</button>
+      </div>
+    </div>
+
+    <!-- ── STEP 4: REVIEW ── -->
+    <div class="step" id="step-3">
+      <div class="step-card">
+        <div class="step-card-header">
+          <div class="step-number">04</div>
+          <div class="step-title-block">
+            <div class="step-title">Review & Generate</div>
+            <div class="step-desc">Confirm all details before generating the tech pack shell.</div>
+          </div>
+        </div>
+        <div class="step-body" id="review-body">
+        </div>
+      </div>
+      <div class="step-footer">
+        <button class="btn btn-ghost" onclick="goTo(2)">← Back</button>
+        <span class="step-counter">Step 4 of 4</span>
+        <button class="btn btn-accent" onclick="generate()">Generate Tech Pack ✦</button>
+      </div>
+    </div>
+
+  </div><!-- /form-steps -->
+
+  <!-- SUCCESS -->
+  <div class="success-screen" id="success-screen">
+    <div class="success-icon">✦</div>
+    <div class="success-title">Tech Pack Generated</div>
+    <div class="success-sub" id="success-sub">Your tech pack shell is ready. Send to the factory or hand off to Lauren for specs.</div>
+    <div class="success-actions">
+      <button class="btn btn-primary" onclick="downloadTP()">Download Tech Pack</button>
+      <button class="btn btn-ghost" onclick="startOver()">Start New Style</button>
+    </div>
+    <div class="output-preview" id="output-preview"></div>
+  </div>
+
+</div><!-- /shell -->
+
+<div class="toast" id="toast"></div>
+
+<script>
+let callouts = [];
+let generatedData = {};
+
+const LIBRARY_TRIMS = [
+  {cat:'Trim',name:'WB Shank Button',code:'OL-BTN-27L',supplier:'Vendor Source',color:'Copper — Anti Dull'},
+  {cat:'Trim',name:'Rivet',code:'OL-RVT-9MM',supplier:'Vendor Source',color:'Copper — Anti Dull'},
+  {cat:'Trim',name:'YKK Zipper Fly',code:'YKK-4.5',supplier:'YKK',color:'Copper w/ Navy Tape'},
+  {cat:'Trim',name:'Fly Shank Button',code:'OL-BTN-24L',supplier:'Vendor Source',color:'Copper — Anti Dull'},
+  {cat:'Label',name:'Main Woven Label',code:'OL-SMWL-21',supplier:'Sunat',color:'White'},
+  {cat:'Label',name:'Size Tag',code:'OL-SIZE-21',supplier:'Sunat',color:'Cream'},
+  {cat:'Label',name:'Do Not Remove Tag',code:'OL-DNREMV-WT24',supplier:'Sunat',color:'Cream text, dark sage bg'},
+  {cat:'Label',name:'Hang Tag',code:'OL-HT-WT24-LUDLOW',supplier:'Sunat',color:'Cream/dark sage 2-card'},
+  {cat:'Label',name:'PO / SKU Label',code:'OL-PO-01',supplier:'Winner',color:'White label, black print'},
+  {cat:'Label',name:'Care Label',code:'OL-CARE-01',supplier:'Vendor Source',color:'Cream'},
+];
+
+function goTo(step){
+  document.querySelectorAll('.step').forEach((s,i)=>{
+    s.classList.toggle('active', i===step);
+  });
+  document.querySelectorAll('.progress-step').forEach((ps,i)=>{
+    ps.classList.remove('active','done');
+    if(i < step) ps.classList.add('done');
+    if(i === step) ps.classList.add('active');
+  });
+  if(step===3) buildReview();
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+function addCallout(){
+  const type = document.getElementById('callout-type').value;
+  const text = document.getElementById('callout-text').value.trim();
+  if(!text){showToast('Enter a callout description');return;}
+  callouts.push({type, text});
+  document.getElementById('callout-text').value='';
+  renderCallouts();
+}
+
+function removeCallout(i){
+  callouts.splice(i,1);
+  renderCallouts();
+}
+
+function renderCallouts(){
+  const list = document.getElementById('callout-list');
+  if(!callouts.length){
+    list.innerHTML='<div style="font-size:12px;color:var(--ink-faint);font-style:italic;padding:8px 0;font-family:var(--serif)">No callouts added yet.</div>';
+    return;
+  }
+  list.innerHTML = callouts.map((c,i)=>`
+    <div class="callout-item">
+      <span class="callout-tag">${c.type}</span>
+      <span class="callout-text">${c.text}</span>
+      <button class="callout-remove" onclick="removeCallout(${i})">×</button>
+    </div>
+  `).join('');
+}
+
+function g(id){return (document.getElementById(id)||{}).value||'';}
+
+function buildReview(){
+  const body = document.getElementById('review-body');
+  const libHTML = LIBRARY_TRIMS.map(t=>`
+    <div class="library-item">
+      <div class="library-item-left">
+        <span class="lib-badge ${t.cat==='Trim'?'lib-trim':'lib-label'}">${t.cat}</span>
+        <span class="library-item-name">${t.name}</span>
+        <span class="library-item-code">${t.code}</span>
+      </div>
+      <span style="font-size:11px;color:var(--sage);font-family:var(--mono);font-size:9px;letter-spacing:0.08em;">✓ From library</span>
+    </div>
+  `).join('');
+
+  const calloutHTML = callouts.length
+    ? callouts.map(c=>`<div class="review-callout"><span class="callout-tag">${c.type}</span><span>${c.text}</span></div>`).join('')
+    : '<div style="font-size:12px;color:var(--ink-faint);font-style:italic;font-family:var(--serif)">None added</div>';
+
+  body.innerHTML = `
+    <div class="review-section">
+      <div class="review-section-title">Style Header</div>
+      <div class="review-grid">
+        <span class="rk">Brand</span><span class="rv">${g('s-brand')}</span>
+        <span class="rk">Division</span><span class="rv">${g('s-division')}</span>
+        <span class="rk">Style #</span><span class="rv">${g('s-style')||'—'} (${g('s-name')||'—'})</span>
+        <span class="rk">Season</span><span class="rv">${g('s-season')}</span>
+        <span class="rk">Sample</span><span class="rv">${g('s-sample')} · Size ${g('s-size')||'—'}</span>
+        <span class="rk">Vendor</span><span class="rv">${g('s-vendor')||'—'}</span>
+        <span class="rk">Designed by</span><span class="rv">${g('s-designer')||'—'}</span>
+      </div>
+    </div>
+    <div class="review-section">
+      <div class="review-section-title">Fabric & Wash</div>
+      <div class="review-grid">
+        <span class="rk">Mill</span><span class="rv">${g('f-mill')||'—'}</span>
+        <span class="rk">Fabric Code</span><span class="rv">${g('f-code')||'—'}</span>
+        <span class="rk">Content</span><span class="rv">${g('f-content')||'—'}</span>
+        <span class="rk">Construction</span><span class="rv">${g('f-construction')} · ${g('f-stretch')}</span>
+        <span class="rk">Wash Code</span><span class="rv">${g('f-wash-code')||'—'}</span>
+        <span class="rk">Wash Name</span><span class="rv">${g('f-wash-name')||'—'}</span>
+        <span class="rk">Thread</span><span class="rv">${g('f-thread')||'—'}</span>
+        ${g('f-wash-notes')?`<span class="rk">Wash Notes</span><span class="rv">${g('f-wash-notes')}</span>`:''}
+      </div>
+    </div>
+    <div class="review-section">
+      <div class="review-section-title">Construction</div>
+      <div class="review-grid">
+        <span class="rk">Silhouette</span><span class="rv">${g('c-silhouette')} · ${g('c-rise')} · ${g('c-fly')}</span>
+        <span class="rk">Callouts</span><div class="review-callouts">${calloutHTML}</div>
+        ${g('c-notes')?`<span class="rk">Notes</span><span class="rv">${g('c-notes')}</span>`:''}
+      </div>
+    </div>
+    <div class="review-section">
+      <div class="review-section-title">Trims & Labels — Auto-pulled from Library</div>
+      <div class="library-items">${libHTML}</div>
+    </div>
+  `;
+}
+
+function generate(){
+  generatedData = {
+    brand: g('s-brand'), division: g('s-division'),
+    style: g('s-style'), name: g('s-name'),
+    season: g('s-season'), size: g('s-size'),
+    vendor: g('s-vendor'), sample: g('s-sample'),
+    designer: g('s-designer'),
+    mill: g('f-mill'), fabricCode: g('f-code'),
+    content: g('f-content'), construction: g('f-construction'),
+    stretch: g('f-stretch'), washCode: g('f-wash-code'),
+    washName: g('f-wash-name'),
+    thread: g('f-thread'), washNotes: g('f-wash-notes'),
+    silhouette: g('c-silhouette'), rise: g('c-rise'),
+    fly: g('c-fly'), flyDetail: g('c-fly-detail'),
+    notes: g('c-notes'), callouts: [...callouts],
+    date: new Date().toISOString().slice(0,10),
+  };
+
+  document.getElementById('form-steps').style.display='none';
+  document.querySelector('.progress-wrap').style.display='none';
+  document.getElementById('success-screen').classList.add('active');
+  document.getElementById('success-sub').textContent =
+    `${generatedData.brand} · ${generatedData.style} (${generatedData.name}) · ${generatedData.season}`;
+
+  renderOutput();
+}
+
+function renderOutput(){
+  const d = generatedData;
+  const calloutRows = d.callouts.map(c=>`
+    <tr><td><span class="callout-tag" style="font-family:var(--mono);font-size:8px;padding:2px 6px;background:var(--accent-pale);color:var(--accent)">${c.type}</span></td><td>${c.text}</td></tr>
+  `).join('');
+  const isButtonFly = d.fly === 'Button Fly';
+  const flyTrims = isButtonFly
+    ? [{cat:'Trim',name:'Button Fly — 5 Button',code:'OL-BTN-FLY',supplier:'Vendor Source',color:'Copper — Anti Dull'},
+       {cat:'Trim',name:'Fly Shank Button',code:'OL-BTN-24L',supplier:'Vendor Source',color:'Copper — Anti Dull'}]
+    : [{cat:'Trim',name:`YKK Zipper Fly${d.flyDetail?' — '+d.flyDetail:''}`,code:'YKK-4.5',supplier:'YKK',color:'Copper w/ Navy Tape'},
+       {cat:'Trim',name:'Fly Shank Button',code:'OL-BTN-24L',supplier:'Vendor Source',color:'Copper — Anti Dull'}];
+  const allTrims = [
+    LIBRARY_TRIMS[0],
+    LIBRARY_TRIMS[1],
+    ...flyTrims,
+    ...LIBRARY_TRIMS.slice(4)
+  ];
+  const trimRows = allTrims.map(t=>`
+    <tr><td><span style="font-family:var(--mono);font-size:8px;padding:2px 6px;background:${t.cat==='Trim'?'var(--accent-pale)':'var(--cream-dark)'};color:${t.cat==='Trim'?'var(--accent)':'var(--ink-muted)'}">${t.cat}</span></td><td style="font-weight:500">${t.name}</td><td style="font-family:var(--mono);font-size:10px;color:var(--ink-faint)">${t.code}</td><td>${t.supplier}</td><td>${t.color}</td></tr>
+  `).join('');
+
+  document.getElementById('output-preview').innerHTML = `
+    <div class="output-header">
+      <div><div class="oh-brand">${d.brand}</div><div class="oh-sub">Sierra Brands Group</div></div>
+      <div class="oh-meta">
+        <span class="oh-k">Division</span><span class="oh-v">${d.division}</span>
+        <span class="oh-k">Style #</span><span class="oh-v">${d.style} (${d.name})</span>
+        <span class="oh-k">Fabric</span><span class="oh-v">${d.fabricCode}</span>
+      </div>
+      <div class="oh-meta">
+        <span class="oh-k">Season</span><span class="oh-v">${d.season}</span>
+        <span class="oh-k">Color / Wash</span><span class="oh-v">${d.color}</span>
+        <span class="oh-k">Vendor</span><span class="oh-v">${d.vendor}</span>
+        <span class="oh-k">Date</span><span class="oh-v">${d.date}</span>
+      </div>
+    </div>
+    <div class="output-page">
+      <div class="output-page-title">Sketches</div>
+      <div style="text-align:center;padding:20px;color:var(--ink-faint);font-family:var(--serif);font-style:italic">${d.silhouette} · ${d.rise} — flat illustration placeholder</div>
+    </div>
+    <div class="output-page">
+      <div class="output-page-title">Fabric / Wash Details</div>
+      <table class="output-table">
+        <tbody>
+          <tr><td style="color:var(--ink-muted);width:140px;font-family:var(--mono);font-size:9px;letter-spacing:0.1em;text-transform:uppercase">Mill</td><td><strong>${d.mill}</strong></td></tr>
+          <tr><td style="color:var(--ink-muted);font-family:var(--mono);font-size:9px;letter-spacing:0.1em;text-transform:uppercase">Code</td><td>${d.fabricCode}</td></tr>
+          <tr><td style="color:var(--ink-muted);font-family:var(--mono);font-size:9px;letter-spacing:0.1em;text-transform:uppercase">Content</td><td>${d.content}</td></tr>
+          <tr><td style="color:var(--ink-muted);font-family:var(--mono);font-size:9px;letter-spacing:0.1em;text-transform:uppercase">Construction</td><td>${d.construction} · ${d.stretch}</td></tr>
+          <tr><td style="color:var(--ink-muted);font-family:var(--mono);font-size:9px;letter-spacing:0.1em;text-transform:uppercase">Wash Code</td><td>${d.washCode}</td></tr>
+          <tr><td style="color:var(--ink-muted);font-family:var(--mono);font-size:9px;letter-spacing:0.1em;text-transform:uppercase">Wash Name</td><td>${d.washName}</td></tr>
+          <tr><td style="color:var(--ink-muted);font-family:var(--mono);font-size:9px;letter-spacing:0.1em;text-transform:uppercase">Thread</td><td>${d.thread}</td></tr>
+          ${d.washNotes?`<tr><td style="color:var(--ink-muted);font-family:var(--mono);font-size:9px;letter-spacing:0.1em;text-transform:uppercase">Notes</td><td>${d.washNotes}</td></tr>`:''}
+        </tbody>
+      </table>
+    </div>
+    <div class="output-page">
+      <div class="output-page-title">Construction</div>
+      ${calloutRows?`<table class="output-table"><thead><tr><th>Type</th><th>Callout</th></tr></thead><tbody>${calloutRows}</tbody></table>`:'<div style="color:var(--ink-faint);font-size:12px;font-style:italic;font-family:var(--serif)">No callouts specified</div>'}
+      ${d.notes?`<div style="margin-top:12px;font-size:12px;color:var(--ink-muted)">${d.notes}</div>`:''}
+    </div>
+    <div class="output-page">
+      <div class="output-page-title">Bill of Materials</div>
+      <table class="output-table">
+        <thead><tr><th>Cat</th><th>Item</th><th>Code</th><th>Supplier</th><th>Colorway</th></tr></thead>
+        <tbody>${trimRows}</tbody>
+      </table>
+    </div>
+    <div class="output-page">
+      <div class="output-page-title">Target Specs</div>
+      <div style="text-align:center;padding:20px;color:var(--ink-faint);font-family:var(--serif);font-style:italic">To be provided by Lauren</div>
+    </div>
+  `;
+}
+
+function downloadTP(){
+  const d = generatedData;
+  const content = document.getElementById('output-preview').outerHTML;
+  const full = `<!DOCTYPE html><html><head><meta charset="UTF-8"><title>${d.brand} — ${d.style}</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=DM+Mono:wght@300;400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>*{box-sizing:border-box;margin:0;padding:0}body{font-family:'DM Sans',sans-serif;background:#F6F1E9;color:#16130F;padding:32px}
+  .output-header{background:#16130F;color:#F6F1E9;padding:16px 20px;display:grid;grid-template-columns:auto 1fr 1fr;gap:20px;border-radius:6px 6px 0 0}
+  .oh-brand{font-family:'Cormorant Garamond',serif;font-size:14px;font-weight:300;letter-spacing:0.08em}
+  .oh-sub{font-family:'DM Mono',monospace;font-size:7px;letter-spacing:0.2em;text-transform:uppercase;color:rgba(246,241,233,0.4);margin-top:2px}
+  .oh-meta{display:grid;grid-template-columns:auto 1fr;gap:2px 8px;font-size:10px}
+  .oh-k{font-family:'DM Mono',monospace;font-size:7.5px;letter-spacing:0.1em;text-transform:uppercase;color:rgba(246,241,233,0.4)}
+  .oh-v{color:#F6F1E9}
+  .output-page{background:white;padding:20px;border:1px solid rgba(22,19,15,0.11);border-top:none}
+  .output-page:last-child{border-radius:0 0 6px 6px}
+  .output-page-title{font-family:'Cormorant Garamond',serif;font-size:18px;font-style:italic;font-weight:300;margin-bottom:12px;color:#16130F}
+  .output-table{width:100%;border-collapse:collapse;font-size:11px}
+  .output-table th{font-family:'DM Mono',monospace;font-size:8px;letter-spacing:0.14em;text-transform:uppercase;color:#8A8278;padding:7px 10px;text-align:left;background:#F6F1E9;border-bottom:1px solid rgba(22,19,15,0.11);font-weight:400}
+  .output-table td{padding:9px 10px;border-bottom:1px solid rgba(22,19,15,0.11);color:#16130F}
+  </style></head><body>${content}</body></html>`;
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(new Blob([full],{type:'text/html'}));
+  a.download = `${d.style}-${d.name}-techpack.html`;
+  a.click();
+  showToast('Downloaded');
+}
+
+function startOver(){
+  document.getElementById('success-screen').classList.remove('active');
+  document.getElementById('form-steps').style.display='';
+  document.querySelector('.progress-wrap').style.display='';
+  callouts=[];
+  renderCallouts();
+  goTo(0);
+  ['s-style','s-name','s-size','s-vendor','s-designer',
+   'f-mill','f-code','f-content','f-wash-code','f-wash-name','f-thread','f-wash-notes','c-notes'
+  ].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});
+}
+
+function showToast(msg){
+  const t=document.getElementById('toast');
+  t.textContent=msg;t.classList.add('show');
+  clearTimeout(t._t);t._t=setTimeout(()=>t.classList.remove('show'),2200);
+}
+
+renderCallouts();
+
+document.getElementById('c-fly').addEventListener('change', function(){
+  const isButton = this.value === 'Button Fly';
+  const wrap = document.getElementById('c-fly-detail-wrap');
+  const input = document.getElementById('c-fly-detail');
+  wrap.querySelector('label').textContent = isButton ? 'Button Fly Notes' : 'Zipper Spec';
+  input.placeholder = isButton ? 'e.g. 5-button fly, copper anti dull' : 'e.g. YKK #4.5 Copper w/ Navy Tape';
+});
+</script>
+</body>
+</html>
