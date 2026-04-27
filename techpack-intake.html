@@ -75,7 +75,15 @@ nav{background:var(--ink);color:var(--cream);padding:0 32px;height:52px;display:
 .btn-submit:disabled{background:var(--ink-faint);cursor:not-allowed;}
 
 /* CHAT VIEW — shown after submit */
-#chat-view{flex:1;display:none;flex-direction:column;min-height:0;}
+#sketch-view{flex:1;padding:32px 0 24px;display:none;flex-direction:column;gap:0;}
+.sketch-drop{border:2px dashed var(--border-med);border-radius:8px;background:white;padding:48px 32px;text-align:center;cursor:pointer;transition:border-color .2s,background .2s;position:relative;}
+.sketch-drop:hover,.sketch-drop.dragover{border-color:var(--accent);background:var(--accent-pale);}
+.sketch-drop input[type=file]{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%;}
+.sketch-icon{font-size:32px;margin-bottom:12px;opacity:0.35;}
+.sketch-drop-title{font-family:var(--serif);font-size:22px;font-style:italic;font-weight:300;color:var(--ink);margin-bottom:6px;}
+.sketch-drop-hint{font-family:var(--mono);font-size:9px;letter-spacing:0.14em;text-transform:uppercase;color:var(--ink-faint);}
+.sketch-preview{display:none;margin-top:16px;text-align:center;}
+.sketch-preview img{max-width:100%;max-height:320px;border-radius:4px;border:1px solid var(--border);}
 .chat{flex:1;padding:24px 0 12px;display:flex;flex-direction:column;gap:14px;overflow-y:auto;}
 
 .msg{display:flex;flex-direction:column;gap:3px;animation:fi .18s ease;}
@@ -150,29 +158,56 @@ textarea::placeholder{color:var(--ink-faint);}
       <!-- FIT -->
       <div class="field-box">
         <div class="field-label">Fit</div>
-        <div class="pill-group" id="fit-pills">
-          <div class="pill" onclick="selectPill(this,'fit','Aberdeen')">Aberdeen</div>
-          <div class="pill" onclick="selectPill(this,'fit','Addington')">Addington</div>
-          <div class="pill" onclick="selectPill(this,'fit','Andrews')">Andrews</div>
-          <div class="pill" onclick="selectPill(this,'fit','Camille')">Camille</div>
-          <div class="pill" onclick="selectPill(this,'fit','Campbell')">Campbell</div>
-          <div class="pill" onclick="selectPill(this,'fit','Colette')">Colette</div>
-          <div class="pill" onclick="selectPill(this,'fit','Crawford')">Crawford</div>
-          <div class="pill" onclick="selectPill(this,'fit','Crosby')">Crosby</div>
-          <div class="pill" onclick="selectPill(this,'fit','Dylan')">Dylan</div>
-          <div class="pill" onclick="selectPill(this,'fit','Elena')">Elena</div>
-          <div class="pill" onclick="selectPill(this,'fit','Elmore')">Elmore</div>
-          <div class="pill" onclick="selectPill(this,'fit','Lawson')">Lawson</div>
-          <div class="pill" onclick="selectPill(this,'fit','Linnie')">Linnie</div>
-          <div class="pill" onclick="selectPill(this,'fit','Lottie')">Lottie</div>
-          <div class="pill" onclick="selectPill(this,'fit','Oxford')">Oxford</div>
-          <div class="pill" onclick="selectPill(this,'fit','Palmer')">Palmer</div>
-          <div class="pill" onclick="selectPill(this,'fit','Preston')">Preston</div>
-          <div class="pill" onclick="selectPill(this,'fit','Stanley')">Stanley</div>
-          <div class="pill" onclick="selectPill(this,'fit','Vivian')">Vivian</div>
-          <div class="pill" onclick="selectPill(this,'fit','Windsor')">Windsor</div>
-          <div class="pill" onclick="selectPill(this,'fit','Winston')">Winston</div>
-        </div>
+        <select class="txt-input" id="fit-select" onchange="setField('fit',this.value);checkForm();" style="cursor:pointer;">
+          <option value="">Select a fit…</option>
+          <option>Aberdeen</option>
+          <option>Addington</option>
+          <option>Andrews</option>
+          <option>Ashby</option>
+          <option>Baxter</option>
+          <option>Bedford</option>
+          <option>Camille</option>
+          <option>Campbell</option>
+          <option>Canyon</option>
+          <option>Chester</option>
+          <option>Colette</option>
+          <option>Cooper</option>
+          <option>Crawford</option>
+          <option>Crosby</option>
+          <option>Dakota</option>
+          <option>Danbury</option>
+          <option>Dylan</option>
+          <option>Easton</option>
+          <option>Elena</option>
+          <option>Elmore</option>
+          <option>Emmerson</option>
+          <option>Evanston</option>
+          <option>Evelyn</option>
+          <option>Flora</option>
+          <option>Harlow</option>
+          <option>Jasper</option>
+          <option>Lawson</option>
+          <option>Linnie</option>
+          <option>Lottie</option>
+          <option>Ludlow</option>
+          <option>Montclair</option>
+          <option>Mulberry</option>
+          <option>Oakmont</option>
+          <option>Oxford</option>
+          <option>Palmer</option>
+          <option>Parker</option>
+          <option>Preston</option>
+          <option>Roxbury</option>
+          <option>Sherman</option>
+          <option>Sofia</option>
+          <option>Stanley</option>
+          <option>Thompson</option>
+          <option>Vivian</option>
+          <option>Willow</option>
+          <option>Windsor</option>
+          <option>Winston</option>
+          <option>Wiscott</option>
+        </select>
       </div>
 
       <div class="rule"></div>
@@ -181,10 +216,10 @@ textarea::placeholder{color:var(--ink-faint);}
       <div class="field-box">
         <div class="field-label">Stretch</div>
         <div class="pill-group">
-          <div class="pill" onclick="selectPill(this,'stretch','Super Stretch')">Super Stretch</div>
-          <div class="pill" onclick="selectPill(this,'stretch','Compact Super Stretch')">Compact Super Stretch</div>
-          <div class="pill" onclick="selectPill(this,'stretch','Comfort Stretch')">Comfort Stretch</div>
-          <div class="pill" onclick="selectPill(this,'stretch','Rigid')">Rigid</div>
+          <div class="pill" onclick="selectStretch(this,'Super Stretch')">Super Stretch</div>
+          <div class="pill" onclick="selectStretch(this,'Compact Super Stretch')">Compact Super Stretch</div>
+          <div class="pill" onclick="selectStretch(this,'Comfort Stretch')">Comfort Stretch</div>
+          <div class="pill" onclick="selectStretch(this,'Rigid')">Rigid</div>
         </div>
       </div>
 
@@ -194,13 +229,24 @@ textarea::placeholder{color:var(--ink-faint);}
       <div class="field-box">
         <div class="field-label">Fabric Code</div>
         <div class="pill-group" id="fabric-pills">
-          <div class="pill" onclick="selectPill(this,'fabricCode','GA3')">GA3</div>
-          <div class="pill" onclick="selectPill(this,'fabricCode','CS1922E-87F')">CS1922E-87F</div>
-          <div class="pill" onclick="selectPill(this,'fabricCode','20-S808J')">20-S808J</div>
-          <div class="pill" onclick="selectPill(this,'fabricCode','C2688X-6T')">C2688X-6T</div>
-          <div class="pill" onclick="selectPill(this,'fabricCode','CS1922E-24F')">CS1922E-24F</div>
+          <div id="fabric-hint" style="font-family:var(--mono);font-size:9px;letter-spacing:0.1em;color:var(--ink-faint);padding:4px 0;">Select a stretch level first</div>
         </div>
-        <input class="txt-input" id="fabric-other" placeholder="Or type a different code…" oninput="setField('fabricCode',this.value);clearPills('fabric-pills');" style="margin-top:8px;">
+        <input class="txt-input" id="fabric-other" placeholder="Or type a different code…" oninput="setField('fabricCode',this.value);clearPills('fabric-pills');" style="margin-top:8px;display:none;">
+      </div>
+
+      <div class="rule"></div>
+
+      <!-- COLOR FAMILY -->
+      <div class="field-box">
+        <div class="field-label">Color Family</div>
+        <div class="pill-group" id="color-pills">
+          <div class="pill" onclick="selectPill(this,'colorFamily','Blue')">Blue</div>
+          <div class="pill" onclick="selectPill(this,'colorFamily','Black')">Black</div>
+          <div class="pill" onclick="selectPill(this,'colorFamily','White')">White</div>
+          <div class="pill" onclick="selectPill(this,'colorFamily','Grey')">Grey</div>
+          <div class="pill" onclick="selectPill(this,'colorFamily','Ecru')">Ecru</div>
+          <div class="pill" onclick="selectPill(this,'colorFamily','PFD')">PFD</div>
+        </div>
       </div>
 
       <div class="rule"></div>
@@ -219,6 +265,63 @@ textarea::placeholder{color:var(--ink-faint);}
           <div class="pill" onclick="selectPill(this,'wash','Ecru')">Ecru</div>
         </div>
         <input class="txt-input" id="wash-other" placeholder="Or type a wash name…" oninput="setField('wash',this.value);clearPills('wash-pills');" style="margin-top:8px;">
+      </div>
+
+      <div class="rule"></div>
+
+      <!-- THREAD COLOR -->
+      <div class="field-box">
+        <div class="field-label">Thread Color</div>
+        <div class="pill-group" id="thread-pills">
+          <div class="pill" onclick="selectPill(this,'threadColor','Tobacco');hideThreadOther()">Tobacco</div>
+          <div class="pill" onclick="selectPill(this,'threadColor','DTM');hideThreadOther()">DTM</div>
+          <div class="pill" onclick="selectPill(this,'threadColor','White');hideThreadOther()">White</div>
+          <div class="pill" onclick="selectPill(this,'threadColor','Black');hideThreadOther()">Black</div>
+          <div class="pill" id="thread-other-pill" onclick="toggleThreadOther(this)">Other</div>
+        </div>
+        <input class="txt-input" id="thread-other-input" placeholder="Type thread color…" oninput="setField('threadColor',this.value);" style="margin-top:8px;display:none;">
+      </div>
+
+      <div class="rule"></div>
+
+      <!-- HEM -->
+      <div class="field-box">
+        <div class="field-label">Hem</div>
+        <div class="pill-group" id="hem-pills">
+          <div class="pill" onclick="selectPill(this,'hem','Finished');hideHemOther()">Finished</div>
+          <div class="pill" onclick="selectPill(this,'hem','Unfinished');hideHemOther()">Unfinished</div>
+          <div class="pill" onclick="selectPill(this,'hem','Slit');hideHemOther()">Slit</div>
+          <div class="pill" onclick="toggleHemOther(this)">Other</div>
+        </div>
+        <input class="txt-input" id="hem-other-input" placeholder="Type hem description…" oninput="setField('hem',this.value);" style="margin-top:8px;display:none;">
+      </div>
+
+      <div class="rule"></div>
+
+      <!-- BRAND/CUSTOMER -->
+      <div class="field-box">
+        <div class="field-label">Brand / Customer</div>
+        <select class="txt-input" id="brand-select" onchange="handleBrandSelect(this.value)" style="cursor:pointer;">
+          <option value="">Select a brand…</option>
+          <option>Oliver Logan</option>
+          <option>Cloak</option>
+          <option>Ripskirt</option>
+          <option>Nordstrom Rack</option>
+          <option>Tilly's</option>
+        </select>
+      </div>
+
+      <!-- TILLY'S CATEGORY — only shown when Tilly's selected -->
+      <div id="tillys-category" style="display:none;">
+        <div class="rule"></div>
+        <div class="field-box">
+          <div class="field-label">Category</div>
+          <div class="pill-group" id="category-pills">
+            <div class="pill" onclick="selectPill(this,'category','Boy\'s')">Boy's</div>
+            <div class="pill" onclick="selectPill(this,'category','Mens')">Men's</div>
+            <div class="pill" onclick="selectPill(this,'category','Junior\'s')">Junior's</div>
+          </div>
+        </div>
       </div>
 
       <div class="rule"></div>
@@ -243,7 +346,61 @@ textarea::placeholder{color:var(--ink-faint);}
     <div id="form-error" style="font-family:var(--mono);font-size:9px;letter-spacing:0.1em;text-transform:uppercase;color:var(--accent);margin-top:10px;display:none;">Please fill in all fields to continue.</div>
   </div>
 
-  <!-- ── STEP 2: CHAT FOLLOW-UP ── -->
+  <!-- ── STEP 2: SKETCH UPLOAD ── -->
+  <div id="sketch-view">
+    <div class="intake-eye">Step 2 of 4</div>
+    <div class="intake-title">Add your sketch</div>
+    <div class="intake-desc">Upload the front and back flat sketch for this style. You can skip this and add it later.</div>
+
+    <div class="sketch-drop" id="sketch-drop"
+         ondragover="event.preventDefault();this.classList.add('dragover')"
+         ondragleave="this.classList.remove('dragover')"
+         ondrop="handleSketchDrop(event)">
+      <input type="file" id="sketch-file" accept="image/*,.svg,.pdf" onchange="handleSketchFile(this.files[0])">
+      <div class="sketch-icon">⬆</div>
+      <div class="sketch-drop-title">Drop your sketch here</div>
+      <div class="sketch-drop-hint">PNG, JPG, SVG or PDF · Click or drag to upload</div>
+    </div>
+
+    <div class="sketch-preview" id="sketch-preview">
+      <img id="sketch-img" src="" alt="Sketch preview">
+      <div style="margin-top:10px;font-family:var(--mono);font-size:9px;letter-spacing:0.12em;text-transform:uppercase;color:var(--ink-muted);" id="sketch-filename"></div>
+    </div>
+
+    <div style="display:flex;gap:10px;margin-top:24px;">
+      <button class="btn-submit" onclick="proceedToWash()">Continue →</button>
+      <button onclick="proceedToWash()" style="font-family:var(--mono);font-size:10px;letter-spacing:0.1em;text-transform:uppercase;padding:13px 20px;background:transparent;color:var(--ink-muted);border:1px solid var(--border-med);border-radius:4px;cursor:pointer;">Skip for now</button>
+    </div>
+  </div>
+
+  <!-- ── STEP 3: WASH REFERENCE ── -->
+  <div id="wash-ref-view" style="flex:1;padding:32px 0 24px;display:none;flex-direction:column;gap:0;">
+    <div class="intake-eye">Step 3 of 4</div>
+    <div class="intake-title">Add wash reference</div>
+    <div class="intake-desc">Upload a photo of the wash on another jean as a reference for the factory. You can skip this and add it later.</div>
+
+    <div class="sketch-drop" id="wash-drop"
+         ondragover="event.preventDefault();this.classList.add('dragover')"
+         ondragleave="this.classList.remove('dragover')"
+         ondrop="handleWashDrop(event)">
+      <input type="file" id="wash-file" accept="image/*" onchange="handleWashFile(this.files[0])">
+      <div class="sketch-icon">⬆</div>
+      <div class="sketch-drop-title">Drop wash reference here</div>
+      <div class="sketch-drop-hint">PNG or JPG · Click or drag to upload</div>
+    </div>
+
+    <div class="sketch-preview" id="wash-preview">
+      <img id="wash-img" src="" alt="Wash reference preview">
+      <div style="margin-top:10px;font-family:var(--mono);font-size:9px;letter-spacing:0.12em;text-transform:uppercase;color:var(--ink-muted);" id="wash-filename"></div>
+    </div>
+
+    <div style="display:flex;gap:10px;margin-top:24px;">
+      <button class="btn-submit" onclick="proceedToChat()">Continue →</button>
+      <button onclick="proceedToChat()" style="font-family:var(--mono);font-size:10px;letter-spacing:0.1em;text-transform:uppercase;padding:13px 20px;background:transparent;color:var(--ink-muted);border:1px solid var(--border-med);border-radius:4px;cursor:pointer;">Skip for now</button>
+    </div>
+  </div>
+
+  <!-- ── STEP 4: CHAT FOLLOW-UP ── -->
   <div id="chat-view">
     <div class="chat" id="chat"></div>
     <div class="bar">
@@ -261,10 +418,182 @@ textarea::placeholder{color:var(--ink-faint);}
 <script>
 // ── DATA ──
 const FIT_NUM = {Aberdeen:'14',Addington:'85',Andrews:'202',Camille:'363',Campbell:'161',Colette:'364',Crawford:'224',Crosby:'08',Dylan:'246',Elena:'362',Elmore:'255',Lawson:'177',Linnie:'361',Lottie:'245',Oxford:'16',Palmer:'221',Preston:'229',Stanley:'83',Vivian:'244',Windsor:'143',Winston:'225'};
+
+// Stretch → fabric code mapping
+const STRETCH_FABRICS = {
+  'Super Stretch':          ['GA3'],
+  'Compact Super Stretch':  ['20-S808J'],
+  'Comfort Stretch':        ['CS1922E-87F','CS1922E-24F'],
+  'Rigid':                  ['C2688X-6T'],
+};
+
+function hideThreadOther(){
+  const inp = document.getElementById('thread-other-input');
+  inp.style.display = 'none';
+  inp.value = '';
+}
+
+function toggleHemOther(el){
+  document.getElementById('hem-pills').querySelectorAll('.pill').forEach(p=>p.classList.remove('sel'));
+  el.classList.add('sel');
+  const inp = document.getElementById('hem-other-input');
+  inp.style.display = 'block';
+  inp.focus();
+  S.hem = inp.value || '';
+  checkForm();
+}
+
+function handleBrandSelect(value){
+  S.customer = value;
+  const catSection = document.getElementById('tillys-category');
+  if(value === "Tilly's"){
+    catSection.style.display = 'block';
+    S.category = S.category || '';
+  } else {
+    catSection.style.display = 'none';
+    S.category = '';
+    document.getElementById('category-pills').querySelectorAll('.pill').forEach(p=>p.classList.remove('sel'));
+  }
+  checkForm();
+}
+
+function handleSketchDrop(e){
+  e.preventDefault();
+  document.getElementById('sketch-drop').classList.remove('dragover');
+  const file = e.dataTransfer.files[0];
+  if(file) handleSketchFile(file);
+}
+
+function handleSketchFile(file){
+  if(!file) return;
+  S.sketchFile = file;
+  S.sketchName = file.name;
+  document.getElementById('sketch-filename').textContent = file.name;
+  // Show preview for images
+  if(file.type.startsWith('image/')){
+    const reader = new FileReader();
+    reader.onload = e => {
+      S.sketchDataUrl = e.target.result;
+      document.getElementById('sketch-img').src = e.target.result;
+      document.getElementById('sketch-preview').style.display='block';
+    };
+    reader.readAsDataURL(file);
+  } else {
+    document.getElementById('sketch-preview').style.display='block';
+    document.getElementById('sketch-img').style.display='none';
+  }
+  // Update drop zone to show success
+  const drop = document.getElementById('sketch-drop');
+  drop.querySelector('.sketch-drop-title').textContent = 'Sketch uploaded';
+  drop.querySelector('.sketch-drop-hint').textContent = file.name + ' · Click to replace';
+}
+
+function handleWashDrop(e){
+  e.preventDefault();
+  document.getElementById('wash-drop').classList.remove('dragover');
+  const file = e.dataTransfer.files[0];
+  if(file) handleWashFile(file);
+}
+
+function handleWashFile(file){
+  if(!file) return;
+  S.washRefFile = file;
+  S.washRefName = file.name;
+  document.getElementById('wash-filename').textContent = file.name;
+  if(file.type.startsWith('image/')){
+    const reader = new FileReader();
+    reader.onload = e => {
+      S.washRefDataUrl = e.target.result;
+      document.getElementById('wash-img').src = e.target.result;
+      document.getElementById('wash-preview').style.display='block';
+    };
+    reader.readAsDataURL(file);
+  }
+  const drop = document.getElementById('wash-drop');
+  drop.querySelector('.sketch-drop-title').textContent = 'Wash reference uploaded';
+  drop.querySelector('.sketch-drop-hint').textContent = file.name + ' · Click to replace';
+}
+
+function proceedToWash(){
+  document.getElementById('sketch-view').style.display='none';
+  const wv=document.getElementById('wash-ref-view');
+  wv.style.display='flex';
+  wv.style.flexDirection='column';
+}
+
+function proceedToChat(){
+  document.getElementById('sketch-view').style.display='none';
+  document.getElementById('wash-ref-view').style.display='none';
+  const cv=document.getElementById('chat-view');
+  cv.style.display='flex';
+  cv.style.flexDirection='column';
+  setTimeout(()=>{
+    usr(`${S.fit} · ${S.stretch} · ${S.fabricCode} · ${S.wash} · ${S.season}`);
+    typing(()=>askNext());
+  },200);
+}
+  const inp = document.getElementById('hem-other-input');
+  inp.style.display = 'none';
+  inp.value = '';
+}
+
+function toggleThreadOther(el){
+  document.getElementById('thread-pills').querySelectorAll('.pill').forEach(p=>p.classList.remove('sel'));
+  el.classList.add('sel');
+  const inp = document.getElementById('thread-other-input');
+  inp.style.display = 'block';
+  inp.focus();
+  S.threadColor = inp.value || '';
+  checkForm();
+}
+
+function selectStretch(el, value){
+  // Deselect other stretch pills
+  el.parentElement.querySelectorAll('.pill').forEach(p=>p.classList.remove('sel'));
+  el.classList.add('sel');
+  S.stretch = value;
+  // Clear any previously selected fabric
+  S.fabricCode = '';
+  // Rebuild fabric pills
+  const fabrics = STRETCH_FABRICS[value] || [];
+  const group = document.getElementById('fabric-pills');
+  const hint  = document.getElementById('fabric-hint');
+  const other = document.getElementById('fabric-other');
+  // Remove existing fabric pills (keep hint node)
+  group.querySelectorAll('.pill').forEach(p=>p.remove());
+  hint.style.display = 'none';
+  other.style.display = 'block';
+  // If only one fabric option, auto-select it
+  if(fabrics.length === 1){
+    S.fabricCode = fabrics[0];
+    const pill = makeFabPill(fabrics[0], true);
+    group.insertBefore(pill, hint);
+    other.style.display = 'none';
+  } else {
+    fabrics.forEach(f=>{
+      group.insertBefore(makeFabPill(f, false), hint);
+    });
+  }
+  checkForm();
+}
+
+function makeFabPill(code, autoSelected){
+  const p = document.createElement('div');
+  p.className = 'pill' + (autoSelected ? ' sel' : '');
+  p.textContent = code;
+  p.onclick = ()=>{
+    document.getElementById('fabric-pills').querySelectorAll('.pill').forEach(x=>x.classList.remove('sel'));
+    p.classList.add('sel');
+    S.fabricCode = code;
+    document.getElementById('fabric-other').value='';
+    checkForm();
+  };
+  return p;
+}
 const FAB_FC  = {GA3:'GA','20-S808J':'SJ','CS1922E-87F':'SF','C2688X-6T':'CX','CS1922E-24F':'EF'};
 const WASH_CODE={'Vintage Medium Indigo':'097','Light Indigo Worn':'140','Dark Aged Vintage':'120','Bright Indigo Worn':'345','True Blue Worn':'264','Timbers':'069','Shiver Me Timbers':'069','Vintage Worn':'123','Vintage Indigo':'047','Dark Worn':'278','Classic Vintage':'137','Ecru':'037','Dark Blue':'136','Grey Worn':'285'};
-const VENDORS=['Winner','Grand Wish','Deyao','Ahtar'];
-const MILLS=['Deyao','Cone Denim','Artistic Milliners','Other'];
+const VENDORS=['Winner','Grand Wish','Ahktar'];
+const MILLS=['Black Peony','Deyao','Vendor Sourced','CF Denim'];
 const INSEAMS=['Standard','Petite','Tall'];
 const FLY=['Zipper Fly','Button Fly'];
 const BRANDS=['Oliver Logan',"Tilly's",'Nordstrom Rack','Cloak'];
@@ -297,7 +626,8 @@ function setField(field, value){
 }
 
 function checkForm(){
-  const ready = S.fit && S.stretch && S.fabricCode && S.wash && S.season;
+  const tillysOk = S.customer !== "Tilly's" || S.category;
+  const ready = S.fit && S.stretch && S.fabricCode && S.colorFamily && S.wash && S.threadColor && S.hem && S.customer && tillysOk && S.season;
   document.getElementById('submit-btn').disabled = !ready;
 }
 
@@ -309,15 +639,9 @@ function submitForm(){
   }
   document.getElementById('form-error').style.display='none';
   document.getElementById('intake-view').style.display='none';
-  const cv=document.getElementById('chat-view');
-  cv.style.display='flex';
-  cv.style.flexDirection='column';
-
-  // Show what we already captured as a user message summary
-  setTimeout(()=>{
-    usr(`${S.fit} · ${S.stretch} · ${S.fabricCode} · ${S.wash} · ${S.season}`);
-    typing(()=>askNext());
-  },200);
+  const sv=document.getElementById('sketch-view');
+  sv.style.display='flex';
+  sv.style.flexDirection='column';
 }
 
 // ── CHAT FOLLOW-UP QUESTIONS ──
@@ -352,17 +676,52 @@ function handle(txt){
   const low=txt.toLowerCase();
   if(step==='inseam'){ S.inseam=INSEAMS.find(i=>low.includes(i.toLowerCase().split(' ')[0]))||txt; }
   else if(step==='fly'){ S.fly=low.includes('button')?'Button Fly':'Zipper Fly'; }
+  else if(step==='designer'){
+    if(txt==='Other'){
+      // Show a text input in chat for typing name
+      showDesignerInput();
+      return;
+    }
+    S.designer=txt;
+  }
   else if(step==='confirm'){
     if(low==='yes'||low.includes('correct')||low.includes('good')||low==='y'||low.includes('generat')){
       generate(); return;
     } else { bot('What would you like to change?'); step='fix'; return; }
   }
   else if(step==='fix'){ applyFix(txt); return; }
+  else if(step==='designer_input'){ S.designer=txt; }
   else { S[step]=txt; }
   typing(()=>askNext());
 }
 
-function applyFix(txt){
+function showDesignerInput(){
+  step = 'designer_input';
+  // Inject an inline input box into the chat
+  const el = document.createElement('div');
+  el.className = 'msg sys';
+  el.innerHTML = `<span class="lbl">Sierra Brands Group</span>
+    <div class="bub" style="padding:12px 14px;">
+      <div style="font-size:13px;margin-bottom:10px;">Type the designer's name:</div>
+      <div style="display:flex;gap:8px;">
+        <input id="designer-name-input" type="text" placeholder="Designer name…"
+          style="flex:1;font-family:var(--sans);font-size:14px;padding:8px 12px;border:1px solid var(--border-med);border-radius:6px;outline:none;"
+          onkeydown="if(event.key==='Enter'){submitDesignerName();}">
+        <button onclick="submitDesignerName()" style="font-family:var(--mono);font-size:10px;letter-spacing:0.1em;text-transform:uppercase;padding:8px 14px;background:var(--ink);color:var(--cream);border:none;border-radius:4px;cursor:pointer;">Done</button>
+      </div>
+    </div>`;
+  document.getElementById('chat').appendChild(el);
+  scroll();
+  setTimeout(()=>document.getElementById('designer-name-input').focus(), 100);
+}
+
+function submitDesignerName(){
+  const val = document.getElementById('designer-name-input').value.trim();
+  if(!val) return;
+  usr(val);
+  S.designer = val;
+  typing(()=>askNext());
+}
   const low=txt.toLowerCase();
   VENDORS.forEach(v=>{ if(low.includes(v.toLowerCase())) S.vendor=v; });
   MILLS.forEach(m=>{ if(low.includes(m.toLowerCase())) S.mill=m; });
@@ -402,8 +761,8 @@ function showSummary(){
           <div class="scard-body">
             ${row('Brand',S.brand)}${row('Division',S.division)}
             ${row('Fit',S.fit)}${row('Stretch',S.stretch)}
-            ${row('Fabric',S.fabricCode)}${row('Mill',S.mill)}
-            ${row('Wash',S.wash)}${row('Season',S.season)}
+            ${row('Fabric',S.fabricCode)}${row('Color Family',S.colorFamily)}
+            ${row('Brand / Customer',S.customer+(S.category?' — '+S.category:''))}${row('Wash',S.wash)}${row('Thread Color',S.threadColor)}${row('Hem',S.hem)}${row('Season',S.season)}
             ${row('Inseam',S.inseam)}${row('Fly',S.fly)}
             ${row('Vendor',S.vendor)}${row('Designed By',S.designer)}
           </div>
@@ -447,10 +806,10 @@ function buildHTML(){
   const hdr=()=>`<div style="background:#16130F;color:#F6F1E9;padding:12px 20px;display:grid;grid-template-columns:155px 1fr 1fr;gap:14px;align-items:start;font-family:'DM Sans',sans-serif;">
     <div><div style="font-family:'Cormorant Garamond',serif;font-size:13px;font-weight:300;letter-spacing:0.12em;">SIERRA BRANDS GROUP</div><div style="font-family:'DM Mono',monospace;font-size:7px;letter-spacing:0.2em;text-transform:uppercase;color:rgba(246,241,233,0.28);margin-top:3px;">Tech Pack Studio</div></div>
     <div style="display:grid;grid-template-columns:auto 1fr;gap:2px 8px;">${hkv('Brand',d.brand)}${hkv('Division',d.division)}${hkv('Style #','<strong>'+d.styleNumber+' ('+d.fit+')</strong>')}${hkv('Fabric',d.fabricCode)}${hkv('Season',d.season)}</div>
-    <div style="display:grid;grid-template-columns:auto 1fr;gap:2px 8px;">${hkv('Sample #','Proto')}${hkv('Sample Size','27')}${hkv('Color / Wash','<strong>'+d.wash+'</strong>')}${hkv('Designed By',d.designer)}${hkv('Vendor',d.vendor)}${hkv('Date Created',d.dateCreated)}${hkv('Date Changed','—')}</div>
+    <div style="display:grid;grid-template-columns:auto 1fr;gap:2px 8px;">${hkv('Sample #','Proto')}${hkv('Sample Size','27')}${hkv('Color / Wash','<strong>'+d.wash+'</strong>')}${hkv('Customer','<strong>'+d.customer+(d.category?' — '+d.category:'')+'</strong>')}${hkv('Designed By',d.designer)}${hkv('Vendor',d.vendor)}${hkv('Date Created',d.dateCreated)}${hkv('Date Changed','—')}</div>
   </div>`;
 
-  const ftr=`<div style="display:flex;justify-content:space-between;padding:7px 20px;border-top:1px solid rgba(22,19,15,0.1);background:#F6F1E9;"><span style="font-family:'DM Mono',monospace;font-size:9px;color:#8A8278;">${d.styleNumber} · ${d.fit} · ${d.wash} · Proto</span><span style="font-family:'DM Mono',monospace;font-size:8px;color:#C4BDB4;text-transform:uppercase;letter-spacing:0.1em;">Sierra Brands Group ©</span></div>`;
+  const ftr=`<div style="display:flex;justify-content:space-between;padding:7px 20px;border-top:1px solid rgba(22,19,15,0.1);background:#F6F1E9;"><span style="font-family:'DM Mono',monospace;font-size:9px;color:#8A8278;">${d.styleNumber} · ${d.fit} · ${d.wash} · ${d.customer} · Proto</span><span style="font-family:'DM Mono',monospace;font-size:8px;color:#C4BDB4;text-transform:uppercase;letter-spacing:0.1em;">Sierra Brands Group ©</span></div>`;
   const page=(title,body)=>`<div style="background:white;border:1px solid rgba(22,19,15,0.12);border-radius:6px;margin-bottom:20px;overflow:hidden;font-family:'DM Sans',sans-serif;">${hdr()}<div style="font-family:'Cormorant Garamond',serif;font-size:20px;font-style:italic;font-weight:300;color:#16130F;padding:16px 22px 12px;border-bottom:1px solid rgba(22,19,15,0.1);">${title}</div><div style="padding:22px;">${body}</div>${ftr}</div>`;
 
   const flyCoRow = isBtn ? co('Button Fly','Button Fly — 5 Button Closure, Copper Anti Dull') : co('Zipper','YKK #4.5 Zipper Fly — Copper w/ Navy Tape, Lock Pull');
@@ -467,15 +826,22 @@ function buildHTML(){
   <span style="font-family:'DM Mono',monospace;font-size:10px;color:#8A8278;">${d.styleNumber} · ${d.fit} · ${d.wash}</span>
 </div>
 
-${page('Sketches',`<div style="text-align:center;padding:48px 0;"><div style="display:inline-block;padding:28px 48px;border:1px dashed rgba(22,19,15,0.18);border-radius:4px;"><div style="font-family:'Cormorant Garamond',serif;font-size:18px;font-style:italic;font-weight:300;color:#8A8278;">${d.fit} — ${d.inseam}</div><div style="font-family:'DM Mono',monospace;font-size:9px;letter-spacing:0.14em;text-transform:uppercase;color:#C4BDB4;margin-top:6px;">Front &amp; Back flat sketch</div></div></div>`)}
+${page('Sketches', d.sketchDataUrl
+  ? `<div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;padding:8px 0;">
+      <div style="text-align:center;"><div style="font-family:'DM Mono',monospace;font-size:8px;letter-spacing:0.16em;text-transform:uppercase;color:#8A8278;margin-bottom:10px;">Front / Back</div><img src="${d.sketchDataUrl}" style="max-width:100%;max-height:420px;border-radius:3px;border:1px solid rgba(22,19,15,0.1);"></div>
+      <div style="display:flex;align-items:center;justify-content:center;border:1px dashed rgba(22,19,15,0.15);border-radius:4px;padding:24px;"><div style="text-align:center;"><div style="font-family:'Cormorant Garamond',serif;font-size:14px;font-style:italic;color:#8A8278;">${d.sketchName||'Sketch uploaded'}</div></div></div>
+     </div>`
+  : `<div style="text-align:center;padding:48px 0;"><div style="display:inline-block;padding:28px 48px;border:1px dashed rgba(22,19,15,0.18);border-radius:4px;"><div style="font-family:'Cormorant Garamond',serif;font-size:18px;font-style:italic;font-weight:300;color:#8A8278;">${d.fit} — ${d.inseam}</div><div style="font-family:'DM Mono',monospace;font-size:9px;letter-spacing:0.14em;text-transform:uppercase;color:#C4BDB4;margin-top:6px;">Attach front &amp; back flat sketch</div></div></div>`)}
 
 ${page('Fabric / Wash Details',`<div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;">
   <table style="border-collapse:collapse;width:100%;">
-    ${[['Mill',d.mill],['Code',d.fabricCode],['Content','Per mill spec sheet'],['Construction',d.stretch],['Wash Name',d.wash],['Thread Color','Tobacco'],['Wash Notes','Follow reference at oliverlogan.com']].map(([k,v])=>`<tr><td style="font-family:'DM Mono',monospace;font-size:8px;letter-spacing:0.12em;text-transform:uppercase;color:#8A8278;padding:5px 12px 5px 0;width:120px;vertical-align:top;">${k}</td><td style="font-size:11px;color:#16130F;font-weight:500;padding:5px 0;">${v}</td></tr>`).join('')}
+    ${[['Mill',d.mill],['Code',d.fabricCode],['Content','Per mill spec sheet'],['Construction',d.stretch],['Color Family',d.colorFamily],['Wash Name',d.wash],['Thread Color',d.threadColor],['Hem',d.hem],['Wash Notes','Follow reference at oliverlogan.com']].map(([k,v])=>`<tr><td style="font-family:'DM Mono',monospace;font-size:8px;letter-spacing:0.12em;text-transform:uppercase;color:#8A8278;padding:5px 12px 5px 0;width:120px;vertical-align:top;">${k}</td><td style="font-size:11px;color:#16130F;font-weight:500;padding:5px 0;">${v}</td></tr>`).join('')}
   </table>
   <div style="background:#F6F1E9;border:1px solid rgba(22,19,15,0.1);border-radius:4px;overflow:hidden;">
     <div style="font-family:'DM Mono',monospace;font-size:8px;letter-spacing:0.16em;text-transform:uppercase;color:#C4622D;padding:10px 14px 6px;">Wash Reference — ${d.wash}</div>
-    <div style="height:160px;background:linear-gradient(140deg,#7B9DC8 0%,#5B7FAA 45%,#3D5E8A 100%);display:flex;align-items:flex-end;padding:10px 12px;"><span style="font-family:'DM Mono',monospace;font-size:9px;color:rgba(255,255,255,0.55);">Reference: oliverlogan.com</span></div>
+    ${d.washRefDataUrl
+      ? `<img src="${d.washRefDataUrl}" style="width:100%;display:block;max-height:220px;object-fit:cover;">`
+      : `<div style="height:160px;background:linear-gradient(140deg,#7B9DC8 0%,#5B7FAA 45%,#3D5E8A 100%);display:flex;align-items:flex-end;padding:10px 12px;"><span style="font-family:'DM Mono',monospace;font-size:9px;color:rgba(255,255,255,0.55);">Reference: oliverlogan.com</span></div>`}
     <div style="padding:10px 14px;font-size:10px;color:#8A8278;font-style:italic;font-family:'Cormorant Garamond',serif;border-top:1px solid rgba(22,19,15,0.08);">Follow on-body wash standard from product page</div>
   </div>
 </div>`)}
@@ -555,12 +921,36 @@ ${[['Main Woven Label — OL-SMWL-21',[['Placement','Sewn inner WB center back']
 
 function newStyle(){
   S={brand:'Oliver Logan',division:'Womens'}; step='inseam';
-  document.getElementById('chat-view').style.display='none';
+  document.getElementById('sketch-view').style.display='none';
+  document.getElementById('wash-ref-view').style.display='none';
+  S.sketchDataUrl=null; S.sketchFile=null; S.sketchName=null;
+  S.washRefDataUrl=null; S.washRefFile=null; S.washRefName=null;
+  const drop=document.getElementById('sketch-drop');
+  if(drop){ drop.querySelector('.sketch-drop-title').textContent='Drop your sketch here'; drop.querySelector('.sketch-drop-hint').textContent='PNG, JPG, SVG or PDF · Click or drag to upload'; }
+  const washDrop=document.getElementById('wash-drop');
+  if(washDrop){ washDrop.querySelector('.sketch-drop-title').textContent='Drop wash reference here'; washDrop.querySelector('.sketch-drop-hint').textContent='PNG or JPG · Click or drag to upload'; }
+  document.getElementById('sketch-preview').style.display='none';
+  document.getElementById('sketch-img').src='';
+  document.getElementById('sketch-img').style.display='block';
+  document.getElementById('wash-preview').style.display='none';
+  document.getElementById('wash-img').src='';
   const iv=document.getElementById('intake-view');
   iv.style.display='flex';
   // Reset pills and inputs
   document.querySelectorAll('.pill').forEach(p=>p.classList.remove('sel'));
-  ['fabric-other','wash-other','season-other'].forEach(id=>{ const el=document.getElementById(id); if(el)el.value=''; });
+  ['wash-other','season-other'].forEach(id=>{ const el=document.getElementById(id); if(el)el.value=''; });
+  const fitSel=document.getElementById('fit-select'); if(fitSel) fitSel.value='';
+  // Reset fabric section back to hint
+  const fabGroup=document.getElementById('fabric-pills');
+  if(fabGroup){ fabGroup.querySelectorAll('.pill').forEach(p=>p.remove()); }
+  const hint=document.getElementById('fabric-hint'); if(hint) hint.style.display='block';
+  const fabOther=document.getElementById('fabric-other'); if(fabOther){fabOther.style.display='none';fabOther.value='';}
+  S.fabricCode=''; S.colorFamily=''; S.customer=''; S.threadColor=''; S.hem=''; S.category='';
+  const brandSel=document.getElementById('brand-select'); if(brandSel) brandSel.value='';
+  const threadInp=document.getElementById('thread-other-input'); if(threadInp){threadInp.style.display='none';threadInp.value='';}
+  const hemInp=document.getElementById('hem-other-input'); if(hemInp){hemInp.style.display='none';hemInp.value='';}
+  const catSection=document.getElementById('tillys-category'); if(catSection) catSection.style.display='none';
+  document.getElementById('category-pills').querySelectorAll('.pill').forEach(p=>p.classList.remove('sel'));
   document.getElementById('submit-btn').disabled=true;
   document.getElementById('chat').innerHTML='';
 }
