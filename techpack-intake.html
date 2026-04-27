@@ -395,22 +395,81 @@ textarea::placeholder{color:var(--ink-faint);}
     </div>
 
     <div style="display:flex;gap:10px;margin-top:24px;">
-      <button class="btn-submit" onclick="proceedToChat()">Continue →</button>
-      <button onclick="proceedToChat()" style="font-family:var(--mono);font-size:10px;letter-spacing:0.1em;text-transform:uppercase;padding:13px 20px;background:transparent;color:var(--ink-muted);border:1px solid var(--border-med);border-radius:4px;cursor:pointer;">Skip for now</button>
+      <button class="btn-submit" onclick="proceedToDetails()">Continue →</button>
+      <button onclick="proceedToDetails()" style="font-family:var(--mono);font-size:10px;letter-spacing:0.1em;text-transform:uppercase;padding:13px 20px;background:transparent;color:var(--ink-muted);border:1px solid var(--border-med);border-radius:4px;cursor:pointer;">Skip for now</button>
     </div>
   </div>
 
-  <!-- ── STEP 4: CHAT FOLLOW-UP ── -->
-  <div id="chat-view">
-    <div class="chat" id="chat"></div>
-    <div class="bar">
-      <textarea id="inp" placeholder="Type your answer…" rows="1"
-        onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();send();}"
-        oninput="this.style.height='auto';this.style.height=Math.min(this.scrollHeight,110)+'px'"></textarea>
-      <button class="sbtn" onclick="send()">
-        <svg viewBox="0 0 16 16"><path d="M1.5 1l13 7-13 7V9.8l9-2.3-9-2.3z"/></svg>
-      </button>
+  <!-- ── STEP 4: DETAILS ── -->
+  <div id="details-view" style="flex:1;padding:32px 0 24px;display:none;flex-direction:column;gap:0;">
+    <div class="intake-eye">Step 4 of 4</div>
+    <div class="intake-title">Final details</div>
+    <div class="intake-desc">Almost done — just a few more details.</div>
+
+    <div class="fields">
+
+      <!-- INSEAM -->
+      <div class="field-box">
+        <div class="field-label">Inseam</div>
+        <div class="pill-group">
+          <div class="pill" onclick="selectPill(this,'inseam','Standard')">Standard</div>
+          <div class="pill" onclick="selectPill(this,'inseam','Petite')">Petite</div>
+          <div class="pill" onclick="selectPill(this,'inseam','Tall')">Tall</div>
+        </div>
+      </div>
+
+      <div class="rule"></div>
+
+      <!-- FLY -->
+      <div class="field-box">
+        <div class="field-label">Fly Type</div>
+        <div class="pill-group">
+          <div class="pill" onclick="selectPill(this,'fly','Zipper Fly')">Zipper Fly</div>
+          <div class="pill" onclick="selectPill(this,'fly','Button Fly')">Button Fly</div>
+        </div>
+      </div>
+
+      <div class="rule"></div>
+
+      <!-- VENDOR -->
+      <div class="field-box">
+        <div class="field-label">Factory / Vendor</div>
+        <div class="pill-group">
+          <div class="pill" onclick="selectPill(this,'vendor','Winner')">Winner</div>
+          <div class="pill" onclick="selectPill(this,'vendor','Grand Wish')">Grand Wish</div>
+          <div class="pill" onclick="selectPill(this,'vendor','Ahktar')">Ahktar</div>
+        </div>
+      </div>
+
+      <div class="rule"></div>
+
+      <!-- MILL -->
+      <div class="field-box">
+        <div class="field-label">Fabric Mill</div>
+        <div class="pill-group">
+          <div class="pill" onclick="selectPill(this,'mill','Black Peony')">Black Peony</div>
+          <div class="pill" onclick="selectPill(this,'mill','Deyao')">Deyao</div>
+          <div class="pill" onclick="selectPill(this,'mill','Vendor Sourced')">Vendor Sourced</div>
+          <div class="pill" onclick="selectPill(this,'mill','CF Denim')">CF Denim</div>
+        </div>
+      </div>
+
+      <div class="rule"></div>
+
+      <!-- DESIGNER -->
+      <div class="field-box">
+        <div class="field-label">Designed By</div>
+        <div class="pill-group" id="designer-pills">
+          <div class="pill" onclick="selectDesigner(this,'Lauren')">Lauren</div>
+          <div class="pill" onclick="showDesignerBox(this)">Other</div>
+        </div>
+        <input class="txt-input" id="designer-input" placeholder="Type designer name…" oninput="S.designer=this.value;checkDetails();" style="margin-top:8px;display:none;">
+      </div>
+
     </div>
+
+    <button class="btn-submit" id="details-btn" onclick="submitDetails()" disabled>Generate Tech Pack →</button>
+    <div id="details-error" style="font-family:var(--mono);font-size:9px;letter-spacing:0.1em;text-transform:uppercase;color:var(--accent);margin-top:10px;display:none;">Please fill in all fields to continue.</div>
   </div>
 
 </div>
@@ -521,16 +580,46 @@ function proceedToWash(){
   wv.style.flexDirection='column';
 }
 
-function proceedToChat(){
+function proceedToDetails(){
   document.getElementById('sketch-view').style.display='none';
   document.getElementById('wash-ref-view').style.display='none';
-  const cv=document.getElementById('chat-view');
-  cv.style.display='flex';
-  cv.style.flexDirection='column';
-  setTimeout(()=>{
-    usr(`${S.fit} · ${S.stretch} · ${S.fabricCode} · ${S.wash} · ${S.season}`);
-    typing(()=>askNext());
-  },200);
+  const dv=document.getElementById('details-view');
+  dv.style.display='flex';
+  dv.style.flexDirection='column';
+}
+
+function checkDetails(){
+  const ready = S.inseam && S.fly && S.vendor && S.mill && S.designer;
+  document.getElementById('details-btn').disabled = !ready;
+}
+
+function selectDesigner(el, name){
+  document.getElementById('designer-pills').querySelectorAll('.pill').forEach(p=>p.classList.remove('sel'));
+  el.classList.add('sel');
+  S.designer = name;
+  document.getElementById('designer-input').style.display='none';
+  document.getElementById('designer-input').value='';
+  checkDetails();
+}
+
+function showDesignerBox(el){
+  document.getElementById('designer-pills').querySelectorAll('.pill').forEach(p=>p.classList.remove('sel'));
+  el.classList.add('sel');
+  S.designer='';
+  const inp=document.getElementById('designer-input');
+  inp.style.display='block';
+  inp.focus();
+  checkDetails();
+}
+
+function submitDetails(){
+  if(!S.inseam||!S.fly||!S.vendor||!S.mill||!S.designer){
+    document.getElementById('details-error').style.display='block';
+    return;
+  }
+  document.getElementById('details-error').style.display='none';
+  buildStyleNumber();
+  showSummary();
 }
 
 function hideHemOther(){
@@ -751,45 +840,56 @@ function buildStyleNumber(){
 }
 
 function showSummary(){
-  step='confirm';
-  typing(()=>{
-    bot("Here's what I have — does this look right?");
-    setTimeout(()=>{
-      const el=document.createElement('div');
-      el.className='msg sys';
-      el.innerHTML=`<span class="lbl">Sierra Brands Group</span>
-        <div class="scard">
-          <div class="scard-head">
-            <span class="scard-sn">${S.styleNumber} · ${S.fit} · ${S.wash}</span>
-            <span class="scard-tag">Proto</span>
-          </div>
-          <div class="scard-body">
-            ${row('Brand',S.brand)}${row('Division',S.division)}
-            ${row('Fit',S.fit)}${row('Stretch',S.stretch)}
-            ${row('Fabric',S.fabricCode)}${row('Color Family',S.colorFamily)}
-            ${row('Brand / Customer',S.customer+(S.category?' — '+S.category:''))}${row('Wash',S.wash)}${row('Thread Color',S.threadColor)}${row('Hem',S.hem)}${row('Season',S.season)}
-            ${row('Inseam',S.inseam)}${row('Fly',S.fly)}
-            ${row('Vendor',S.vendor)}${row('Designed By',S.designer)}
-          </div>
-          <div class="scard-foot">
-            <button class="btn-go" onclick="generate()">Generate Tech Pack →</button>
-            <button class="btn-fix" onclick="fix()">Make a change</button>
-          </div>
-        </div>`;
-      document.getElementById('chat').appendChild(el); scroll();
-    },300);
-  });
+  // Hide details view, show summary overlay
+  document.getElementById('details-view').style.display='none';
+  // Build summary overlay
+  let overlay = document.getElementById('summary-overlay');
+  if(!overlay){
+    overlay = document.createElement('div');
+    overlay.id = 'summary-overlay';
+    overlay.style.cssText='flex:1;padding:32px 0 24px;display:flex;flex-direction:column;gap:0;';
+    document.querySelector('.shell').appendChild(overlay);
+  }
+  overlay.style.display='flex';
+  overlay.innerHTML=`
+    <div class="intake-eye">Review</div>
+    <div class="intake-title" style="margin-bottom:20px;">Does this look right?</div>
+    <div class="scard" style="max-width:100%;">
+      <div class="scard-head">
+        <span class="scard-sn">${S.styleNumber} · ${S.fit} · ${S.wash}</span>
+        <span class="scard-tag">Proto</span>
+      </div>
+      <div class="scard-body">
+        ${row('Fit',S.fit)}${row('Stretch',S.stretch)}
+        ${row('Fabric',S.fabricCode)}${row('Color Family',S.colorFamily)}
+        ${row('Wash',S.wash)}${row('Thread Color',S.threadColor)}
+        ${row('Hem',S.hem)}${row('Customer',S.customer+(S.category?' — '+S.category:''))}
+        ${row('Season',S.season)}${row('Inseam',S.inseam)}
+        ${row('Fly',S.fly)}${row('Vendor',S.vendor)}
+        ${row('Mill',S.mill)}${row('Designed By',S.designer)}
+      </div>
+      <div class="scard-foot">
+        <button class="btn-go" onclick="generate()">Generate Tech Pack →</button>
+        <button class="btn-fix" onclick="goBackToDetails()">Make a change</button>
+      </div>
+    </div>`;
+}
+
+function goBackToDetails(){
+  const overlay=document.getElementById('summary-overlay');
+  if(overlay) overlay.style.display='none';
+  const dv=document.getElementById('details-view');
+  dv.style.display='flex';
+  dv.style.flexDirection='column';
 }
 
 function row(k,v){ return `<div class="sr"><span class="sk">${k}</span><span class="sv">${v||'—'}</span></div>`; }
-function fix(){ bot('What would you like to change?'); step='fix'; }
 
 // ── GENERATE ──
 function generate(){
-  typing(()=>{
-    bot(`Generating <strong>${S.styleNumber}</strong>…`);
-    setTimeout(buildHTML,500);
-  });
+  const overlay=document.getElementById('summary-overlay');
+  if(overlay){ overlay.innerHTML=`<div class="intake-eye">Generating</div><div class="intake-title" style="margin-bottom:8px;">Building your tech pack…</div><div style="font-family:var(--mono);font-size:11px;color:var(--ink-muted);">${S.styleNumber} · ${S.fit} · ${S.wash}</div>`; }
+  setTimeout(buildHTML, 400);
 }
 
 function buildHTML(){
@@ -902,32 +1002,38 @@ ${[['Main Woven Label — OL-SMWL-21',[['Placement','Sewn inner WB center back']
   const a=document.createElement('a');
   a.href=URL.createObjectURL(blob); a.download=`${d.styleNumber}_${d.fit}_${(d.wash||'').replace(/\s+/g,'-')}.html`; a.click();
 
+  // Show done screen in overlay
   setTimeout(()=>{
-    const el=document.createElement('div');
-    el.className='msg sys';
-    el.innerHTML=`<span class="lbl">Sierra Brands Group</span>
-      <div class="dcard">
-        <div class="dcard-title">${d.styleNumber} · ready to print</div>
-        <div class="dcard-grid">
-          <span class="dk">Style #</span><span class="dv">${d.styleNumber}</span>
-          <span class="dk">Fit</span><span class="dv">${d.fit} · ${d.inseam}</span>
-          <span class="dk">Wash</span><span class="dv">${d.wash}</span>
-          <span class="dk">Season</span><span class="dv">${d.season}</span>
-          <span class="dk">Vendor</span><span class="dv">${d.vendor}</span>
-          <span class="dk">Fly</span><span class="dv">${d.fly}</span>
-        </div>
-        <div class="dcard-foot">
-          <button class="btn-go" onclick="newStyle()">New style →</button>
-        </div>
-      </div>`;
-    document.getElementById('chat').appendChild(el); scroll();
-  },700);
+    const overlay=document.getElementById('summary-overlay');
+    if(overlay){
+      overlay.innerHTML=`
+        <div class="intake-eye">Done</div>
+        <div class="intake-title" style="margin-bottom:20px;">${d.styleNumber} · ready to print</div>
+        <div class="scard" style="max-width:100%;">
+          <div class="scard-head">
+            <span class="scard-sn">${d.styleNumber} · ${d.fit} · ${d.wash}</span>
+            <span class="scard-tag">Proto</span>
+          </div>
+          <div class="scard-body">
+            ${row('Style #',d.styleNumber)}${row('Fit',d.fit+' · '+d.inseam)}
+            ${row('Wash',d.wash)}${row('Season',d.season)}
+            ${row('Vendor',d.vendor)}${row('Fly',d.fly)}
+            ${row('Mill',d.mill)}${row('Designed By',d.designer)}
+          </div>
+          <div class="scard-foot">
+            <button class="btn-go" onclick="newStyle()">New style →</button>
+          </div>
+        </div>`;
+    }
+  },600);
 }
 
 function newStyle(){
-  S={brand:'Oliver Logan',division:'Womens'}; step='inseam';
-  document.getElementById('sketch-view').style.display='none';
-  document.getElementById('wash-ref-view').style.display='none';
+  S={brand:'Oliver Logan',division:'Womens'};
+  ['sketch-view','wash-ref-view','details-view'].forEach(id=>{
+    const el=document.getElementById(id); if(el) el.style.display='none';
+  });
+  const overlay=document.getElementById('summary-overlay'); if(overlay) overlay.style.display='none';
   S.sketchDataUrl=null; S.sketchFile=null; S.sketchName=null;
   S.washRefDataUrl=null; S.washRefFile=null; S.washRefName=null;
   const drop=document.getElementById('sketch-drop');
@@ -939,13 +1045,9 @@ function newStyle(){
   document.getElementById('sketch-img').style.display='block';
   document.getElementById('wash-preview').style.display='none';
   document.getElementById('wash-img').src='';
-  const iv=document.getElementById('intake-view');
-  iv.style.display='flex';
-  // Reset pills and inputs
   document.querySelectorAll('.pill').forEach(p=>p.classList.remove('sel'));
-  ['wash-other','season-other'].forEach(id=>{ const el=document.getElementById(id); if(el)el.value=''; });
+  ['wash-other','season-other','designer-input'].forEach(id=>{ const el=document.getElementById(id); if(el){el.value='';el.style.display='none';} });
   const fitSel=document.getElementById('fit-select'); if(fitSel) fitSel.value='';
-  // Reset fabric section back to hint
   const fabGroup=document.getElementById('fabric-pills');
   if(fabGroup){ fabGroup.querySelectorAll('.pill').forEach(p=>p.remove()); }
   const hint=document.getElementById('fabric-hint'); if(hint) hint.style.display='block';
@@ -955,9 +1057,12 @@ function newStyle(){
   const threadInp=document.getElementById('thread-other-input'); if(threadInp){threadInp.style.display='none';threadInp.value='';}
   const hemInp=document.getElementById('hem-other-input'); if(hemInp){hemInp.style.display='none';hemInp.value='';}
   const catSection=document.getElementById('tillys-category'); if(catSection) catSection.style.display='none';
-  document.getElementById('category-pills').querySelectorAll('.pill').forEach(p=>p.classList.remove('sel'));
+  const catPills=document.getElementById('category-pills'); if(catPills) catPills.querySelectorAll('.pill').forEach(p=>p.classList.remove('sel'));
   document.getElementById('submit-btn').disabled=true;
-  document.getElementById('chat').innerHTML='';
+  document.getElementById('details-btn').disabled=true;
+  const iv=document.getElementById('intake-view');
+  iv.style.display='flex';
+  iv.style.flexDirection='column';
 }
 
 // ── UI HELPERS ──
