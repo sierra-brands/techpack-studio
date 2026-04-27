@@ -607,13 +607,15 @@ let step = 'inseam';
 
 // ── FORM INTERACTIONS ──
 function selectPill(el, field, value){
-  // Deselect siblings
   el.parentElement.querySelectorAll('.pill').forEach(p=>p.classList.remove('sel'));
   el.classList.add('sel');
   S[field] = value;
-  // Clear the text input sibling if any
-  const txt = document.getElementById(field==='fabricCode'?'fabric-other':field==='wash'?'wash-other':field==='season'?'season-other':null);
-  if(txt) txt.value='';
+  // Clear associated text input if one exists for this field
+  const inputMap = {'fabricCode':'fabric-other','wash':'wash-other','season':'season-other'};
+  if(inputMap[field]){
+    const txt = document.getElementById(inputMap[field]);
+    if(txt) txt.value='';
+  }
   checkForm();
 }
 
