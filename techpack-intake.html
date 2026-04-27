@@ -532,6 +532,8 @@ function proceedToChat(){
     typing(()=>askNext());
   },200);
 }
+
+function hideHemOther(){
   const inp = document.getElementById('hem-other-input');
   inp.style.display = 'none';
   inp.value = '';
@@ -722,8 +724,9 @@ function submitDesignerName(){
   S.designer = val;
   typing(()=>askNext());
 }
+
+function applyFix(txt){
   const low=txt.toLowerCase();
-  VENDORS.forEach(v=>{ if(low.includes(v.toLowerCase())) S.vendor=v; });
   MILLS.forEach(m=>{ if(low.includes(m.toLowerCase())) S.mill=m; });
   INSEAMS.forEach(i=>{ if(low.includes(i.toLowerCase().split(' ')[0])) S.inseam=i; });
   if(low.includes('button')) S.fly='Button Fly';
