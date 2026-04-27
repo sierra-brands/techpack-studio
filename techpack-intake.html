@@ -835,7 +835,7 @@ function buildStyleNumber(){
   for(const [name,code] of Object.entries(WASH_CODE)){
     if(wl.includes(name.toLowerCase().split(' ')[0])){ wc=code; break; }
   }
-  S.styleNumber=`W${fc}-${fit}-${wc}`;
+  S.styleNumber=`W${fc}-${fit}-${wc}${S.inseam==='Petite'?'P':S.inseam==='Tall'?'T':''}`;
   S.dateCreated=new Date().toISOString().slice(0,10);
 }
 
